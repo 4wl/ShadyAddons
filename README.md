@@ -20,5 +20,5 @@ I forgot how to do.
 
 ----------------------------------------------
 
-## NOTE
+## *NOTE*
 *This is NOT compilable!*
