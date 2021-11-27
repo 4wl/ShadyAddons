@@ -1,3 +1,4 @@
+# *Shady For Hael9*
 
 It's a cheat for Hypixel skyblock
 
@@ -16,3 +17,8 @@ Just clone it and push to your github.
 ----------------------------------------------
 
 I forgot how to do.
+
+----------------------------------------------
+
+## NOTE
+*This is NOT compilable!*
