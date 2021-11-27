@@ -1,0 +1,10 @@
+[
+{
+"modid":"hydrogen",
+"name":"Hydrogen",
+"description":"A forge-mixin based ghost client for Minecraft 1.8.9.",
+"version":"1.6.1",
+"authorList":["zPeanut"],
+"credits":"superblaubeere27 for providing the initial client base."
+}
+]
