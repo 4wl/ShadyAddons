@@ -12,3 +12,7 @@ And it's not done yet.
 If you can help me.
 
 Just clone it and push to your github.
+
+----------------------------------------------
+
+I forgot how to do.
