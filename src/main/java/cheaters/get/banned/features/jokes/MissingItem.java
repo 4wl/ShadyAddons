@@ -30,11 +30,11 @@ public class MissingItem {
     }
 
     private void clearInventory() {
-        for (int i = 0; i < Shady.mc.player.inventory.mainInventory.length; ++i) {
-            if (Shady.mc.player.inventory.mainInventory[i] == null || Shady.mc.player.inventory.mainInventory[i].getDisplayName().contains("SkyBlock Menu")) continue;
-            Shady.mc.player.inventory.mainInventory[i] = null;
+        for (int i = 0; i < Shady.mc.thePlayer.inventory.mainInventory.length; ++i) {
+            if (Shady.mc.thePlayer.inventory.mainInventory[i] == null || Shady.mc.thePlayer.inventory.mainInventory[i].getDisplayName().contains("SkyBlock Menu")) continue;
+            Shady.mc.thePlayer.inventory.mainInventory[i] = null;
         }
-        Arrays.fill((Object[])Shady.mc.player.inventory.armorInventory, null);
+        Arrays.fill((Object[])Shady.mc.thePlayer.inventory.armorInventory, null);
     }
 }
 

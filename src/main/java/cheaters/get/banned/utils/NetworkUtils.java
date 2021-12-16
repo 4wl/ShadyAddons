@@ -11,7 +11,7 @@ import net.minecraft.network.Packet;
 
 public class NetworkUtils {
     public static void sendPacket(Packet<?> packet) {
-        Shady.mc.getConnection().getNetworkManager().sendPacket(packet);
+        Shady.mc.getNetHandler().getNetworkManager().sendPacket(packet);
     }
 }
 

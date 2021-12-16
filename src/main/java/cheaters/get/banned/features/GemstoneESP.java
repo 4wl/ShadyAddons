@@ -46,17 +46,17 @@ public class GemstoneESP {
 
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
-        if (!(!GemstoneESP.isEnabled() || this.isScanning || this.lastChecked != null && this.lastChecked.equals((Object)Shady.mc.player.bedLocation))) {
+        if (!(!GemstoneESP.isEnabled() || this.isScanning || this.lastChecked != null && this.lastChecked.equals((Object)Shady.mc.thePlayer.playerLocation))) {
             this.isScanning = true;
             new Thread(() -> {
                 BlockPos playerPosition;
-                this.lastChecked = playerPosition = Shady.mc.player.getPosition();
+                this.lastChecked = playerPosition = Shady.mc.thePlayer.getPosition();
                 for (int x = playerPosition.getX() - Config.gemstoneRadius; x < playerPosition.getX() + Config.gemstoneRadius; ++x) {
                     for (int y = playerPosition.getY() - Config.gemstoneRadius; y < playerPosition.getY() + Config.gemstoneRadius; ++y) {
                         for (int z = playerPosition.getZ() - Config.gemstoneRadius; z < playerPosition.getZ() + Config.gemstoneRadius; ++z) {
                             Gemstone gemstone;
                             BlockPos position = new BlockPos(x, y, z);
-                            if (!this.checked.contains((Object)position) && !Shady.mc.world.isAirBlock(position) && (gemstone = GemstoneESP.getGemstone(Shady.mc.world.getBlockState(position))) != null) {
+                            if (!this.checked.contains((Object)position) && !Shady.mc.theWorld.isAirBlock(position) && (gemstone = GemstoneESP.getGemstone(Shady.mc.theWorld.getBlockState(position))) != null) {
                                 this.gemstones.put(position, gemstone);
                             }
                             this.checked.add(position);
@@ -70,7 +70,7 @@ public class GemstoneESP {
 
     @SubscribeEvent
     public void onBlockChange(BlockChangeEvent event) {
-        if (event.newBlock.getBlock() == Blocks.AIR) {
+        if (event.newBlock.getBlock() == Blocks.air) {
             this.gemstones.remove((Object)event.position);
         }
     }
@@ -80,7 +80,7 @@ public class GemstoneESP {
         if (GemstoneESP.isEnabled()) {
             for (Map.Entry<BlockPos, Gemstone> gemstone : this.gemstones.entrySet()) {
                 double distance;
-                if (!GemstoneESP.isGemstoneEnabled(gemstone.getValue()) || (distance = Math.sqrt(gemstone.getKey().distanceSq(Shady.mc.player.posX, Shady.mc.player.posY, Shady.mc.player.posZ))) > (double)(Config.gemstoneRadius + 2)) continue;
+                if (!GemstoneESP.isGemstoneEnabled(gemstone.getValue()) || (distance = Math.sqrt(gemstone.getKey().distanceSq(Shady.mc.thePlayer.posX, Shady.mc.thePlayer.posY, Shady.mc.thePlayer.posZ))) > (double)(Config.gemstoneRadius + 2)) continue;
                 int alpha = (int)Math.abs(100.0 - distance / (double)Config.gemstoneRadius * 100.0);
                 Color color = Utils.addAlpha(gemstone.getValue().color, alpha);
                 RenderUtils.highlightBlock(gemstone.getKey(), color, event.partialTicks);
@@ -89,14 +89,14 @@ public class GemstoneESP {
     }
 
     private static boolean isEnabled() {
-        return Shady.mc.player != null && Shady.mc.world != null && FolderSetting.isEnabled("Gemstone ESP") && Utils.inSkyBlock && LocationUtils.onIsland(LocationUtils.Island.CRYSTAL_HOLLOWS);
+        return Shady.mc.thePlayer != null && Shady.mc.theWorld != null && FolderSetting.isEnabled("Gemstone ESP") && Utils.inSkyBlock && LocationUtils.onIsland(LocationUtils.Island.CRYSTAL_HOLLOWS);
     }
 
     private static Gemstone getGemstone(IBlockState block) {
-        if (block.getBlock() != Blocks.STAINED_GLASS) {
+        if (block.getBlock() != Blocks.stained_glass) {
             return null;
         }
-        if (Config.includeGlassPanes && block.getBlock() != Blocks.STAINED_GLASS_PANE) {
+        if (Config.includeGlassPanes && block.getBlock() != Blocks.stained_glass_pane) {
             return null;
         }
         EnumDyeColor color = Utils.firstNotNull(new EnumDyeColor[]{(EnumDyeColor)block.getValue((IProperty)BlockStainedGlass.COLOR), (EnumDyeColor)block.getValue((IProperty)BlockStainedGlassPane.COLOR)});

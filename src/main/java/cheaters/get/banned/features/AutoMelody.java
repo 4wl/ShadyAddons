@@ -41,7 +41,7 @@ public class AutoMelody {
 
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
-        if (!this.inHarp || !Config.autoMelody || Shady.mc.player == null) {
+        if (!this.inHarp || !Config.autoMelody || Shady.mc.thePlayer == null) {
             return;
         }
         String inventoryName = Utils.getInventoryName();
@@ -49,14 +49,14 @@ public class AutoMelody {
             this.inHarp = false;
         }
         ArrayList<Item> thisInventory = new ArrayList<Item>();
-        for (Slot slot : Shady.mc.player.openContainer.inventorySlots) {
+        for (Slot slot : Shady.mc.thePlayer.openContainer.inventorySlots) {
             if (slot.getStack() == null) continue;
             thisInventory.add(slot.getStack().getItem());
         }
         if (!this.lastInventory.toString().equals(thisInventory.toString())) {
-            for (Slot slot : Shady.mc.player.openContainer.inventorySlots) {
-                if (slot.getStack() == null || !(slot.getStack().getItem() instanceof ItemBlock) || ((ItemBlock)slot.getStack().getItem()).getBlock() != Blocks.QUARTZ_BLOCK) continue;
-                Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.player);
+            for (Slot slot : Shady.mc.thePlayer.openContainer.inventorySlots) {
+                if (slot.getStack() == null || !(slot.getStack().getItem() instanceof ItemBlock) || ((ItemBlock)slot.getStack().getItem()).getBlock() != Blocks.quartz_block) continue;
+                Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
                 break;
             }
         }

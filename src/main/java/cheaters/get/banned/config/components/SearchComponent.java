@@ -26,13 +26,13 @@ extends GuiButton {
         this.text = initText;
     }
 
-    public void func_146112_a(Minecraft mc, int mouseX, int mouseY) {
-        RenderUtils.drawTexture(new ResourceLocation("shadyaddons:search.png"), this.x, this.y + 2, 14, 14);
-        SearchComponent.drawRect((int)(this.x + 20), (int)this.y, (int)(this.x + this.width + 15), (int)(this.y + this.height), (int)ConfigInput.transparent.getRGB());
-        FontUtils.drawScaledString(this.text, 1.25f, this.x + 26, this.y + 4, false);
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        RenderUtils.drawTexture(new ResourceLocation("shadyaddons:search.png"), this.xPosition, this.yPosition + 2, 14, 14);
+        SearchComponent.drawRect((int)(this.xPosition + 20), (int)this.yPosition, (int)(this.xPosition + this.width + 15), (int)(this.yPosition + this.height), (int)ConfigInput.transparent.getRGB());
+        FontUtils.drawScaledString(this.text, 1.25f, this.xPosition + 26, this.yPosition + 4, false);
         int textWidth = (int)((float)FontUtils.getStringWidth(this.text) * 1.25f);
         if (System.currentTimeMillis() / 500L % 2L == 0L) {
-            SearchComponent.drawRect((int)(this.x + textWidth + 20 + 1), (int)(this.y + 2), (int)(this.x + textWidth + 26 + 2), (int)(this.y + this.height - 2), (int)ConfigInput.white.getRGB());
+            SearchComponent.drawRect((int)(this.xPosition + textWidth + 20 + 1), (int)(this.yPosition + 2), (int)(this.xPosition + textWidth + 26 + 2), (int)(this.yPosition + this.height - 2), (int)ConfigInput.white.getRGB());
         }
     }
 

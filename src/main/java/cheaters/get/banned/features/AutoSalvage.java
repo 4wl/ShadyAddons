@@ -54,20 +54,20 @@ public class AutoSalvage {
     public void onTick(TickEndEvent event) {
         if (this.tickCount % 5 == 0 && Config.autoSalvage && this.inSalvageGui && this.salvaging && Shady.mc.currentScreen instanceof GuiChest) {
             List chestInventory = ((GuiChest)Shady.mc.currentScreen).inventorySlots.inventorySlots;
-            if (((Slot)chestInventory.get(31)).getStack() != null && ((Slot)chestInventory.get(31)).getStack().getItem() == Items.SKULL) {
-                if (chestInventory.get(22) != null && ((Slot)chestInventory.get(22)).getStack() != null & ((Slot)chestInventory.get(22)).getStack().getItem() == Item.getItemFromBlock((Block)Blocks.STAINED_HARDENED_CLAY)) {
-                    Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, 22, 2, 0, (EntityPlayer)Shady.mc.player);
+            if (((Slot)chestInventory.get(31)).getStack() != null && ((Slot)chestInventory.get(31)).getStack().getItem() == Items.skull) {
+                if (chestInventory.get(22) != null && ((Slot)chestInventory.get(22)).getStack() != null & ((Slot)chestInventory.get(22)).getStack().getItem() == Item.getItemFromBlock((Block)Blocks.stained_hardened_clay)) {
+                    Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, 22, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
                 }
-                if (chestInventory.get(13) != null && ((Slot)chestInventory.get(13)).getStack() != null && chestInventory.get(22) != null && ((Slot)chestInventory.get(22)).getStack() != null && ((Slot)chestInventory.get(22)).getStack().getItem() == Item.getItemFromBlock((Block)Blocks.ANVIL)) {
-                    Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, 22, 2, 0, (EntityPlayer)Shady.mc.player);
+                if (chestInventory.get(13) != null && ((Slot)chestInventory.get(13)).getStack() != null && chestInventory.get(22) != null && ((Slot)chestInventory.get(22)).getStack() != null && ((Slot)chestInventory.get(22)).getStack().getItem() == Item.getItemFromBlock((Block)Blocks.anvil)) {
+                    Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, 22, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
                 }
             } else if (chestInventory.get(13) != null && ((Slot)chestInventory.get(13)).getStack() == null) {
-                ArrayList<Slot> itemsToSalvage = new ArrayList<Slot>(Shady.mc.player.inventoryContainer.inventorySlots);
+                ArrayList<Slot> itemsToSalvage = new ArrayList<Slot>(Shady.mc.thePlayer.inventoryContainer.inventorySlots);
                 itemsToSalvage.removeIf(slot -> !AutoSalvage.shouldSalvage(slot.getStack()));
                 if (itemsToSalvage.isEmpty()) {
                     this.salvaging = false;
                 } else {
-                    Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, 45 + ((Slot)itemsToSalvage.get((int)0)).slotNumber, 0, 1, (EntityPlayer)Shady.mc.player);
+                    Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, 45 + ((Slot)itemsToSalvage.get((int)0)).slotNumber, 0, 1, (EntityPlayer)Shady.mc.thePlayer);
                 }
             }
         }
@@ -83,10 +83,10 @@ public class AutoSalvage {
                 this.salvaging = true;
             } else {
                 ScaledResolution scaledResolution = new ScaledResolution(Shady.mc);
-                AutoSalvage.button.x = (scaledResolution.getScaledWidth() - AutoSalvage.button.width) / 2;
-                AutoSalvage.button.y = scaledResolution.getScaledHeight() / 2 - 145;
+                AutoSalvage.button.xPosition = (scaledResolution.getScaledWidth() - AutoSalvage.button.width) / 2;
+                AutoSalvage.button.yPosition = scaledResolution.getScaledHeight() / 2 - 145;
                 AutoSalvage.button.displayString = this.salvaging ? "\u00a7cStop" : "\u00a7aStart";
-                button.func_146112_a(event.gui.mc, event.getMouseX(), event.getMouseY());
+                button.drawButton(event.gui.mc, event.getMouseX(), event.getMouseY());
             }
         } else {
             this.salvaging = false;
@@ -96,8 +96,8 @@ public class AutoSalvage {
     @SubscribeEvent
     public void onDrawSlot(DrawSlotEvent event) {
         if (Config.autoSalvage && this.inSalvageGui && button.isMouseOver() && AutoSalvage.shouldSalvage(event.slot.getStack())) {
-            int x = event.slot.xPos;
-            int y = event.slot.yPos;
+            int x = event.slot.xDisplayPosition;
+            int y = event.slot.yDisplayPosition;
             Gui.drawRect((int)x, (int)y, (int)(x + 16), (int)(y + 16), (int)Utils.addAlpha(Color.RED, 128).getRGB());
         }
     }

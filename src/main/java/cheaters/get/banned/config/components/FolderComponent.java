@@ -22,12 +22,12 @@ extends ConfigInput {
         this.setting = setting;
         this.width = 300;
         this.height = 9;
-        this.x -= this.width;
+        this.xPosition -= this.width;
     }
 
-    public void func_146112_a(Minecraft mc, int mouseX, int mouseY) {
-        this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-        RenderUtils.drawRotatedTexture(new ResourceLocation("shadyaddons:chevron.png"), this.x + this.width - this.height, this.y, this.height, this.height, this.setting.get(Boolean.class) != false ? 180 : 0);
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+        RenderUtils.drawRotatedTexture(new ResourceLocation("shadyaddons:chevron.png"), this.xPosition + this.width - this.height, this.yPosition, this.height, this.height, this.setting.get(Boolean.class) != false ? 180 : 0);
     }
 
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {

@@ -1,10 +1,10 @@
 [
-{
-"modid":"hydrogen",
-"name":"Hydrogen",
-"description":"A forge-mixin based ghost client for Minecraft 1.8.9.",
-"version":"1.6.1",
-"authorList":["zPeanut"],
-"credits":"superblaubeere27 for providing the initial client base."
-}
+  {
+    "modid": "autogg",
+    "name": "ShadyAddons",
+    "url": "https://cheatersgetbanned.me/",
+    "description": "Cheaters get banned",
+    "version": "2.2.3",
+    "logoFile": "assets/shadyaddons/logo.png"
+  }
 ]

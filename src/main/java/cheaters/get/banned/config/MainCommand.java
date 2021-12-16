@@ -31,11 +31,11 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class MainCommand
 extends CommandBase {
-    public String getName() {
+    public String getCommandName() {
         return "sh";
     }
 
-    public List<String> getAliases() {
+    public List<String> getCommandAliases() {
         return new ArrayList<String>(){
             {
                 this.add("shady");
@@ -44,11 +44,11 @@ extends CommandBase {
         };
     }
 
-    public String getUsage(ICommandSender sender) {
-        return "/" + this.getName();
+    public String getCommandUsage(ICommandSender sender) {
+        return "/" + this.getCommandName();
     }
 
-    public void func_71515_b(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         block47: {
             block46: {
                 if (!Shady.enabled) {

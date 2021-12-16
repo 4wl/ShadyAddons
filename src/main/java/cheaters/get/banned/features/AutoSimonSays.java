@@ -22,7 +22,7 @@ public class AutoSimonSays {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (Config.autoSimonSays && !this.clicking && Utils.inDungeon && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && Shady.mc.world.getBlockState(event.pos).getBlock() == Blocks.STONE_BUTTON) {
+        if (Config.autoSimonSays && !this.clicking && Utils.inDungeon && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && Shady.mc.theWorld.getBlockState(event.pos).getBlock() == Blocks.stone_button) {
             int x = event.pos.getX();
             int y = event.pos.getY();
             int z = event.pos.getZ();

@@ -59,9 +59,9 @@ public class RoomLoader {
                 JsonObject blocksObject = roomObject.getAsJsonObject("blocks");
                 HashMap stringBlocksMap = (HashMap)new Gson().fromJson((JsonElement)blocksObject, HashMap.class);
                 HashMap<Block, String> blockConditions = new HashMap<Block, String>();
-                for (Map.Entry block : stringBlocksMap.entrySet()) {
+                /*for (Map.Entry block : stringBlocksMap.entrySet()) {
                     blockConditions.put(Block.getBlockFromName((String)("minecraft:" + (String)block.getKey())), (String)block.getValue());
-                }
+                }*/
                 room.blockConditions = blockConditions;
                 yLevels.add(room.yLevel);
                 rooms.add(room);

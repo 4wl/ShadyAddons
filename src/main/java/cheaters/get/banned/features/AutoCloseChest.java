@@ -21,10 +21,10 @@ public class AutoCloseChest {
         if (event.gui instanceof GuiChest && Utils.inSkyBlock) {
             String chestName = Utils.getGuiName(event.gui);
             if (Utils.inDungeon && Config.closeSecretChests && chestName.equals("Chest")) {
-                Shady.mc.player.closeScreen();
+                Shady.mc.thePlayer.closeScreen();
             }
             if (Utils.inSkyBlock && Config.closeCrystalHollowsChests && (chestName.contains("Loot Chest") || chestName.contains("Treasure Chest"))) {
-                Shady.mc.player.closeScreen();
+                Shady.mc.thePlayer.closeScreen();
             }
         }
     }

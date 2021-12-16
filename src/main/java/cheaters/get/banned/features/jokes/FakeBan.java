@@ -43,14 +43,14 @@ public class FakeBan {
                 case 561388713: {
                     banStart = System.currentTimeMillis() - 1000L;
                     event.setCanceled(true);
-                    FakeBan.fakeGenericBan(Shady.mc.getConnection().getNetworkManager());
+                    FakeBan.fakeGenericBan(Shady.mc.getNetHandler().getNetworkManager());
                     break;
                 }
                 case -1708887982: 
                 case -63219957: {
                     usernameBan = true;
                     event.setCanceled(true);
-                    FakeBan.fakeUsernameBan(Shady.mc.getConnection().getNetworkManager());
+                    FakeBan.fakeUsernameBan(Shady.mc.getNetHandler().getNetworkManager());
                     break;
                 }
                 default: {

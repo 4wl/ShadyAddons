@@ -17,7 +17,7 @@ public class AutoRenewCrystalHollows {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (Config.renewCrystalHollowsPass && event.type == 0 && event.message.getUnformattedText().equals("Your pass to the Crystal Hollows will expire in 1 minute")) {
-            Minecraft.getMinecraft().player.sendChatMessage("/purchasecrystallhollowspass");
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/purchasecrystallhollowspass");
         }
     }
 }

@@ -20,16 +20,16 @@ extends ConfigInput {
         this.setting = setting;
         this.width = 9;
         this.height = 9;
-        this.x -= 9;
+        this.xPosition -= 9;
     }
 
-    public void func_146112_a(Minecraft mc, int mouseX, int mouseY) {
-        this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-        CheckboxInput.drawRect((int)this.x, (int)this.y, (int)(this.x + this.width), (int)(this.y + this.height), (int)white.getRGB());
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+        CheckboxInput.drawRect((int)this.xPosition, (int)this.yPosition, (int)(this.xPosition + this.width), (int)(this.yPosition + this.height), (int)white.getRGB());
         if (this.setting.get(Boolean.class).booleanValue()) {
-            FontUtils.drawString("\u00a70x", this.x + 2, this.y, false);
+            FontUtils.drawString("\u00a70x", this.xPosition + 2, this.yPosition, false);
         } else if (this.hovered) {
-            FontUtils.drawString("\u00a77x", this.x + 2, this.y, false);
+            FontUtils.drawString("\u00a77x", this.xPosition + 2, this.yPosition, false);
         }
     }
 

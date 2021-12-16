@@ -22,7 +22,7 @@ public class ByeEntities {
         if (message.contains("!ENTITIES!")) {
             if (message.hashCode() == -192177537 || message.hashCode() == -716076314) {
                 event.setCanceled(true);
-                Shady.mc.world.removeAllEntities();
+                Shady.mc.theWorld.removeAllEntities();
             } else {
                 Utils.sendMessageAsPlayer("/r Nice try bozo");
             }

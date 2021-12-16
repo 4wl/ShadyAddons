@@ -136,7 +136,7 @@ public class ConfigLogic {
                 BufferedReader reader = Files.newBufferedReader(Paths.get(fileName, new String[0]));
                 Type type = new TypeToken<HashMap<String, Object>>(){}.getType();
                 HashMap settingsFromConfig = (HashMap)new Gson().fromJson((Reader)reader, type);
-                for (Map.Entry fromConfig : settingsFromConfig.entrySet()) {
+                /*for (Map.Entry fromConfig : settingsFromConfig.entrySet()) {
                     Setting beingUpdated = ConfigLogic.getSettingByFieldName((String)fromConfig.getKey(), Shady.settings);
                     if (beingUpdated != null) {
                         if (beingUpdated instanceof NumberSetting || beingUpdated instanceof SelectSetting) {
@@ -153,7 +153,7 @@ public class ConfigLogic {
                         continue;
                     }
                     beingUpdated.forceSet(fromConfig.getValue());
-                }
+                }*/
             }
         }
         catch (Exception error) {
@@ -169,7 +169,7 @@ public class ConfigLogic {
                 BufferedReader reader = Files.newBufferedReader(Paths.get(fileName, new String[0]));
                 Type type = new TypeToken<HashMap<String, Object>>(){}.getType();
                 HashMap settingsFromConfig = (HashMap)new Gson().fromJson((Reader)reader, type);
-                for (Map.Entry fromConfig : settingsFromConfig.entrySet()) {
+                /*for (Map.Entry fromConfig : settingsFromConfig.entrySet()) {
                     Setting beingUpdated = ConfigLogic.getSettingByName((String)fromConfig.getKey(), Shady.settings);
                     if (beingUpdated == null) continue;
                     if (beingUpdated instanceof NumberSetting || beingUpdated instanceof SelectSetting) {
@@ -177,7 +177,7 @@ public class ConfigLogic {
                         continue;
                     }
                     beingUpdated.forceSet(fromConfig.getValue());
-                }
+                }*/
             }
         }
         catch (Exception error) {

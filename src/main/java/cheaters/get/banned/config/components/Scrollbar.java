@@ -17,19 +17,19 @@ public class Scrollbar
 extends GuiButton {
     public Scrollbar(int y, int viewport, int contentHeight, int scrollOffset, int x, boolean hovered) {
         super(0, x, y, "");
-        this.y += Math.round((float)scrollOffset / (float)contentHeight * (float)viewport);
+        this.yPosition += Math.round((float)scrollOffset / (float)contentHeight * (float)viewport);
         this.width = 5;
         this.height = contentHeight > viewport ? Math.round((float)viewport / (float)contentHeight * (float)viewport) : 0;
         this.hovered = hovered;
     }
 
-    public void func_146112_a(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         this.hovered = this.mousePressed(mc, mouseX, mouseY);
-        Scrollbar.drawRect((int)this.x, (int)this.y, (int)(this.x + this.width), (int)(this.y + this.height), (int)(this.hovered ? ConfigInput.white.getRGB() : ConfigInput.transparent.getRGB()));
+        Scrollbar.drawRect((int)this.xPosition, (int)this.yPosition, (int)(this.xPosition + this.width), (int)(this.yPosition + this.height), (int)(this.hovered ? ConfigInput.white.getRGB() : ConfigInput.transparent.getRGB()));
     }
 
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+        return mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
     }
 
     public void playPressSound(SoundHandler soundHandlerIn) {

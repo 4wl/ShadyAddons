@@ -38,10 +38,10 @@ public class AutoSell {
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
         List chestInventory;
-        if (this.tickCount % 3 == 0 && Utils.inSkyBlock && Config.autoSell && this.inTradeMenu && Shady.mc.currentScreen instanceof GuiChest && ((Slot)(chestInventory = ((GuiChest)Shady.mc.currentScreen).inventorySlots.inventorySlots).get(49)).getStack() != null && ((Slot)chestInventory.get(49)).getStack().getItem() != Item.getItemFromBlock((Block)Blocks.BARRIER)) {
-            for (Slot slot : Shady.mc.player.inventoryContainer.inventorySlots) {
+        if (this.tickCount % 3 == 0 && Utils.inSkyBlock && Config.autoSell && this.inTradeMenu && Shady.mc.currentScreen instanceof GuiChest && ((Slot)(chestInventory = ((GuiChest)Shady.mc.currentScreen).inventorySlots.inventorySlots).get(49)).getStack() != null && ((Slot)chestInventory.get(49)).getStack().getItem() != Item.getItemFromBlock((Block)Blocks.barrier)) {
+            for (Slot slot : Shady.mc.thePlayer.inventoryContainer.inventorySlots) {
                 if (!this.shouldSell(slot.getStack())) continue;
-                Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, 45 + slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.player);
+                Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, 45 + slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
                 break;
             }
         }

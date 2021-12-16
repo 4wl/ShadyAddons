@@ -55,7 +55,7 @@ extends GuiScreen {
         GlStateManager.color((float)255.0f, (float)255.0f, (float)255.0f);
         Shady.mc.getTextureManager().bindTexture(this.logo);
         ConfigGui.drawModalRectWithCustomSizedTexture((int)(this.width / 2 - 143), (int)(24 - this.scrollOffset), (float)0.0f, (float)0.0f, (int)286, (int)40, (float)286.0f, (float)40.0f);
-        this.drawCenteredString(Shady.mc.fontRenderer, (Shady.BETA ? "Beta \u2726 " : "Stable \u2726 ") + "2.2.3", this.width / 2, 67 - this.scrollOffset, -1);
+        this.drawCenteredString(Shady.mc.fontRendererObj, (Shady.BETA ? "Beta \u2726 " : "Stable \u2726 ") + "2.2.3", this.width / 2, 67 - this.scrollOffset, -1);
         for (int i = 0; i < settings.size(); ++i) {
             Setting setting = settings.get(i);
             int x = this.getOffset();
@@ -82,9 +82,9 @@ extends GuiScreen {
             if (setting instanceof FolderSetting && ((FolderSetting)setting).isChildEnabled()) {
                 color = 'a';
             }
-            Shady.mc.fontRenderer.drawString("\u00a7" + color + setting.name, x, y + 1, -1);
+            Shady.mc.fontRendererObj.drawString("\u00a7" + color + setting.name, x, y + 1, -1);
             if (setting.note == null) continue;
-            int settingNameWidth = Shady.mc.fontRenderer.getStringWidth(setting.name + " ");
+            int settingNameWidth = Shady.mc.fontRendererObj.getStringWidth(setting.name + " ");
             GlStateManager.translate((double)0.0, (double)1.8, (double)0.0);
             FontUtils.drawScaledString("\u00a77" + setting.note, 0.8f, x + settingNameWidth, y + 1, false);
             GlStateManager.translate((double)0.0, (double)-1.8, (double)0.0);
@@ -133,7 +133,7 @@ extends GuiScreen {
             scrollAmount = (int)((float)scrollAmount / (float)viewport * (float)contentHeight);
         }
         if (contentHeight > viewport) {
-            this.scrollOffset = MathHelper.clamp((int)(this.scrollOffset + scrollAmount), (int)0, (int)(contentHeight - viewport));
+            this.scrollOffset = MathHelper.clamp_int((int)(this.scrollOffset + scrollAmount), (int)0, (int)(contentHeight - viewport));
             this.initGui();
         }
     }

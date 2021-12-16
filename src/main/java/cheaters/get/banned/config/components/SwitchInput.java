@@ -19,16 +19,16 @@ extends ConfigInput {
         this.setting = setting;
         this.width = 25;
         this.height = 9;
-        this.x -= this.width;
+        this.xPosition -= this.width;
     }
 
-    public void func_146112_a(Minecraft mc, int mouseX, int mouseY) {
-        SwitchInput.drawRect((int)this.x, (int)(this.y + 3), (int)(this.x + this.width), (int)(this.y + 6), (int)white.getRGB());
-        SwitchInput.drawRect((int)(this.setting.get(Boolean.class) != false ? this.x + this.width - this.height : this.x), (int)this.y, (int)(this.setting.get(Boolean.class) != false ? this.x + this.width : this.x + this.height), (int)(this.y + this.height), (int)(this.setting.get(Boolean.class) != false ? green.getRGB() : red.getRGB()));
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        SwitchInput.drawRect((int)this.xPosition, (int)(this.yPosition + 3), (int)(this.xPosition + this.width), (int)(this.yPosition + 6), (int)white.getRGB());
+        SwitchInput.drawRect((int)(this.setting.get(Boolean.class) != false ? this.xPosition + this.width - this.height : this.xPosition), (int)this.yPosition, (int)(this.setting.get(Boolean.class) != false ? this.xPosition + this.width : this.xPosition + this.height), (int)(this.yPosition + this.height), (int)(this.setting.get(Boolean.class) != false ? green.getRGB() : red.getRGB()));
     }
 
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height) {
+        if (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height) {
             this.setting.set(this.setting.get(Boolean.class) == false);
             return true;
         }

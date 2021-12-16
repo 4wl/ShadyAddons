@@ -17,8 +17,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class BlockAbilities {
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && Shady.mc.player.func_70694_bm() != null) {
-            String skyBlockID = Utils.getSkyBlockID(Shady.mc.player.func_70694_bm());
+        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK && Shady.mc.thePlayer.getHeldItem() != null) {
+            String skyBlockID = Utils.getSkyBlockID(Shady.mc.thePlayer.getHeldItem());
             if (Config.blockCellsAlignment && skyBlockID.equals("GYROKINETIC_WAND") || Config.blockGiantsSlam && skyBlockID.equals("GIANTS_SWORD") || Config.blockValkyrie && Utils.inDungeon && skyBlockID.equals("VALKYRIE")) {
                 event.setCanceled(true);
             }

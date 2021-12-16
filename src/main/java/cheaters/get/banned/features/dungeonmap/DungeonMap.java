@@ -77,7 +77,7 @@ public class DungeonMap {
                             zCorner = 191;
                         }
                     }
-                    if (Shady.mc.world.getChunk(new BlockPos(xCorner, 70, zCorner)).isLoaded() && Shady.mc.world.getChunk(new BlockPos(0, 70, 0)).isLoaded()) {
+                    if (Shady.mc.theWorld.getChunkFromBlockCoords(new BlockPos(xCorner, 70, zCorner)).isLoaded() && Shady.mc.theWorld.getChunkFromBlockCoords(new BlockPos(0, 70, 0)).isLoaded()) {
                         scanning = true;
                         new Thread(() -> {
                             activeDungeonLayout = DungeonScanner.scan(xCorner, zCorner);
@@ -108,15 +108,16 @@ public class DungeonMap {
             if (Config.witherDoorESP && DungeonUtils.dungeonRun != null && !DungeonUtils.dungeonRun.inBoss) {
                 for (DungeonLayout.ConnectorTile door : DungeonMap.activeDungeonLayout.connectorTiles) {
                     Color color;
-                    if ((door.isOpen || door.type != DungeonLayout.ConnectorTile.Type.WITHER_DOOR) && door.type != DungeonLayout.ConnectorTile.Type.BLOOD_DOOR) continue;
+                    if ((door.isOpen || door.type != DungeonLayout.ConnectorTile.Type.WITHER_DOOR) && door.type != DungeonLayout.ConnectorTile.Type.BLOOD_DOOR)
+                        continue;
                     Color color2 = color = Config.witherDoorColor == 0 ? Color.WHITE : Color.BLACK;
                     if (door.type == DungeonLayout.ConnectorTile.Type.BLOOD_DOOR) {
                         color = Color.RED;
                     }
-                    Iterable positions = door.direction == EnumFacing.NORTH || door.direction == EnumFacing.SOUTH ? BlockPos.getAllInBox((BlockPos)door.getPosition(69).west(1), (BlockPos)door.getPosition(72).east(1)) : BlockPos.getAllInBox((BlockPos)door.getPosition(69).north(1), (BlockPos)door.getPosition(72).south(1));
-                    for (BlockPos position : positions) {
-                        RenderUtils.highlightBlock(position, color, event.partialTicks);
-                    }
+                    Iterable positions = door.direction == EnumFacing.NORTH || door.direction == EnumFacing.SOUTH ? BlockPos.getAllInBox((BlockPos) door.getPosition(69).west(1), (BlockPos) door.getPosition(72).east(1)) : BlockPos.getAllInBox((BlockPos) door.getPosition(69).north(1), (BlockPos) door.getPosition(72).south(1));
+                    //  for (BlockPos position : positions) {
+                    //  RenderUtils.highlightBlock(position, color, event.partialTicks);
+                // }
                 }
             }
         }
@@ -188,16 +189,16 @@ public class DungeonMap {
                 }
             }
         }
-        if (Shady.mc.player != null) {
+        if (Shady.mc.thePlayer != null) {
             int size = 14;
             HashSet<String> players = DungeonUtils.dungeonRun.team;
             players.add(Shady.mc.getSession().getUsername());
             try {
                 for (String player : DungeonUtils.dungeonRun.team) {
-                    EntityPlayer playerEntity = Shady.mc.world.getPlayerEntityByName(player);
+                    EntityPlayer playerEntity = Shady.mc.theWorld.getPlayerEntityByName(player);
                     if (playerEntity == null || playerEntity.getPosition() == null) continue;
-                    int playerX = MathHelper.clamp((int)(playerEntity.getPosition().getX() - size / 2), (int)0, (int)(xCorner - 14));
-                    int playerZ = MathHelper.clamp((int)(playerEntity.getPosition().getZ() - size / 2), (int)0, (int)(zCorner - 14));
+                    int playerX = MathHelper.clamp_int((int)(playerEntity.getPosition().getX() - size / 2), (int)0, (int)(xCorner - 14));
+                    int playerZ = MathHelper.clamp_int((int)(playerEntity.getPosition().getZ() - size / 2), (int)0, (int)(zCorner - 14));
                     float playerRotation = playerEntity.getRotationYawHead() - 180.0f;
                     DungeonMap.drawPlayerIcon(playerEntity, size, playerX, playerZ, (int)playerRotation);
                 }

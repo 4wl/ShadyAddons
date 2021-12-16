@@ -77,23 +77,23 @@ public class ItemMacro {
         if (Config.rogueSwordHotkey && KeybindUtils.isPressed("Use Rogue Sword") && !ItemMacro.useRogueSword()) {
             ItemMacro.sendMissingItemMessage("Rogue Sword");
         }
-        if (Config.fishingRodHotkey && KeybindUtils.isPressed("Use Fishing Rod") && !ItemMacro.useVanillaItem((Item)Items.FISHING_ROD)) {
+        if (Config.fishingRodHotkey && KeybindUtils.isPressed("Use Fishing Rod") && !ItemMacro.useVanillaItem((Item)Items.fishing_rod)) {
             ItemMacro.sendMissingItemMessage("Fishing Rod");
         }
     }
 
     public static boolean useSkyBlockItem(String itemId, boolean rightClick) {
         for (int i = 0; i < 9; ++i) {
-            ItemStack item = Shady.mc.player.inventory.getStackInSlot(i);
+            ItemStack item = Shady.mc.thePlayer.inventory.getStackInSlot(i);
             if (!itemId.equals(Utils.getSkyBlockID(item))) continue;
-            int previousItem = Shady.mc.player.inventory.currentItem;
-            Shady.mc.player.inventory.currentItem = i;
+            int previousItem = Shady.mc.thePlayer.inventory.currentItem;
+            Shady.mc.thePlayer.inventory.currentItem = i;
             if (rightClick) {
-                Shady.mc.playerController.func_78769_a((EntityPlayer)Shady.mc.player, (World)Shady.mc.world, item);
+                Shady.mc.playerController.sendUseItem((EntityPlayer)Shady.mc.thePlayer, (World)Shady.mc.theWorld, item);
             } else {
                 KeybindUtils.leftClick();
             }
-            Shady.mc.player.inventory.currentItem = previousItem;
+            Shady.mc.thePlayer.inventory.currentItem = previousItem;
             return true;
         }
         return false;
@@ -101,14 +101,14 @@ public class ItemMacro {
 
     public static boolean useRogueSword() {
         for (int i = 0; i < 9; ++i) {
-            ItemStack item = Shady.mc.player.inventory.getStackInSlot(i);
+            ItemStack item = Shady.mc.thePlayer.inventory.getStackInSlot(i);
             if (!"ROGUE_SWORD".equals(Utils.getSkyBlockID(item))) continue;
-            int previousItem = Shady.mc.player.inventory.currentItem;
-            Shady.mc.player.inventory.currentItem = i;
+            int previousItem = Shady.mc.thePlayer.inventory.currentItem;
+            Shady.mc.thePlayer.inventory.currentItem = i;
             for (int j = 0; j < 40; ++j) {
-                Shady.mc.playerController.func_78769_a((EntityPlayer)Shady.mc.player, (World)Shady.mc.world, item);
+                Shady.mc.playerController.sendUseItem((EntityPlayer)Shady.mc.thePlayer, (World)Shady.mc.theWorld, item);
             }
-            Shady.mc.player.inventory.currentItem = previousItem;
+            Shady.mc.thePlayer.inventory.currentItem = previousItem;
             return true;
         }
         return false;
@@ -116,12 +116,12 @@ public class ItemMacro {
 
     public static boolean useVanillaItem(Item item) {
         for (int i = 0; i < 9; ++i) {
-            ItemStack itemStack = Shady.mc.player.inventory.getStackInSlot(i);
+            ItemStack itemStack = Shady.mc.thePlayer.inventory.getStackInSlot(i);
             if (itemStack == null || itemStack.getItem() != item) continue;
-            int previousItem = Shady.mc.player.inventory.currentItem;
-            Shady.mc.player.inventory.currentItem = i;
-            Shady.mc.playerController.func_78769_a((EntityPlayer)Shady.mc.player, (World)Shady.mc.world, itemStack);
-            Shady.mc.player.inventory.currentItem = previousItem;
+            int previousItem = Shady.mc.thePlayer.inventory.currentItem;
+            Shady.mc.thePlayer.inventory.currentItem = i;
+            Shady.mc.playerController.sendUseItem((EntityPlayer)Shady.mc.thePlayer, (World)Shady.mc.theWorld, itemStack);
+            Shady.mc.thePlayer.inventory.currentItem = previousItem;
             return true;
         }
         return false;

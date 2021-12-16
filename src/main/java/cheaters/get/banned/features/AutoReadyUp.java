@@ -33,24 +33,24 @@ public class AutoReadyUp {
     public void onTick(TickEndEvent event) {
         if (Config.autoReadyUp && Utils.inDungeon && !dungeonStarted) {
             if (!readyUp) {
-                for (Entity entity : Shady.mc.world.getLoadedEntityList()) {
+                for (Entity entity : Shady.mc.theWorld.getLoadedEntityList()) {
                     List possibleEntities;
-                    if (!(entity instanceof EntityArmorStand) || !entity.hasCustomName() || !entity.getCustomNameTag().equals("\u00a7bMort") || (possibleEntities = entity.getEntityWorld().getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().grow(0.0, 3.0, 0.0), e -> e instanceof EntityPlayer)).isEmpty()) continue;
-                    Shady.mc.playerController.func_78768_b((EntityPlayer)Shady.mc.player, (Entity)possibleEntities.get(0));
+                    if (!(entity instanceof EntityArmorStand) || !entity.hasCustomName() || !entity.getCustomNameTag().equals("\u00a7bMort") || (possibleEntities = entity.getEntityWorld().getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().expand(0.0, 3.0, 0.0), e -> e instanceof EntityPlayer)).isEmpty()) continue;
+                    Shady.mc.playerController.interactWithEntitySendPacket((EntityPlayer)Shady.mc.thePlayer, (Entity)possibleEntities.get(0));
                     readyUp = true;
                 }
             }
             String chestName = Utils.getInventoryName();
             if (readyUp && chestName != null) {
                 if (chestName.equals("Start Dungeon?")) {
-                    Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, 13, 2, 0, (EntityPlayer)Shady.mc.player);
+                    Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, 13, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
                     return;
                 }
                 if (chestName.startsWith("Catacombs - ")) {
-                    for (Slot slot : Shady.mc.player.openContainer.inventorySlots) {
-                        if (slot.getStack() == null || !slot.getStack().getDisplayName().contains(Shady.mc.player.getName())) continue;
-                        Shady.mc.playerController.func_78753_a(Shady.mc.player.openContainer.windowId, slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.player);
-                        Shady.mc.player.closeScreen();
+                    for (Slot slot : Shady.mc.thePlayer.openContainer.inventorySlots) {
+                        if (slot.getStack() == null || !slot.getStack().getDisplayName().contains(Shady.mc.thePlayer.getName())) continue;
+                        Shady.mc.playerController.windowClick(Shady.mc.thePlayer.openContainer.windowId, slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
+                        Shady.mc.thePlayer.closeScreen();
                         break;
                     }
                 }

@@ -34,10 +34,10 @@ public class DisableSwordAnimation {
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
         String itemID;
-        if (Config.disableBlockAnimation && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && Shady.mc.player.func_70694_bm() != null && this.swords.contains(itemID = Utils.getSkyBlockID(Shady.mc.player.func_70694_bm()))) {
+        if (Config.disableBlockAnimation && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && Shady.mc.thePlayer.getHeldItem() != null && this.swords.contains(itemID = Utils.getSkyBlockID(Shady.mc.thePlayer.getHeldItem()))) {
             event.setCanceled(true);
             if (!isRightClickKeyDown) {
-                NetworkUtils.sendPacket(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, Shady.mc.player.func_70694_bm(), 0.0f, 0.0f, 0.0f));
+                NetworkUtils.sendPacket(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, Shady.mc.thePlayer.getHeldItem(), 0.0f, 0.0f, 0.0f));
             }
         }
     }

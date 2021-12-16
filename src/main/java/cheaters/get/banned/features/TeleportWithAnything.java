@@ -23,15 +23,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class TeleportWithAnything {
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (Config.teleportWithAnything && Utils.inSkyBlock && Shady.mc.player.inventory.currentItem == 0 && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+        if (Config.teleportWithAnything && Utils.inSkyBlock && Shady.mc.thePlayer.inventory.currentItem == 0 && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
             for (int i = 0; i < 9; ++i) {
-                ItemStack item = Shady.mc.player.inventory.getStackInSlot(i);
+                ItemStack item = Shady.mc.thePlayer.inventory.getStackInSlot(i);
                 String itemID = Utils.getSkyBlockID(item);
                 if (!itemID.equals("ASPECT_OF_THE_END") && !itemID.equals("ASPECT_OF_THE_VOID")) continue;
                 event.setCanceled(true);
-                Shady.mc.player.inventory.currentItem = i;
-                Shady.mc.playerController.func_78769_a((EntityPlayer)Shady.mc.player, (World)Shady.mc.world, item);
-                Shady.mc.player.inventory.currentItem = 0;
+                Shady.mc.thePlayer.inventory.currentItem = i;
+                Shady.mc.playerController.sendUseItem((EntityPlayer)Shady.mc.thePlayer, (World)Shady.mc.theWorld, item);
+                Shady.mc.thePlayer.inventory.currentItem = 0;
                 break;
             }
         }

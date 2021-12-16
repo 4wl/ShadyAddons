@@ -31,7 +31,7 @@ public abstract class MixinModelEnderCrystal {
             GlStateManager.disableLighting();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate((int)770, (int)771, (int)1, (int)0);
-            RenderUtils.bindColor(entityIn.equals((Object)CrystalReach.crystal) && Shady.mc.player.isSneaking() ? Color.MAGENTA : Color.WHITE);
+            RenderUtils.bindColor(entityIn.equals((Object)CrystalReach.crystal) && Shady.mc.thePlayer.isSneaking() ? Color.MAGENTA : Color.WHITE);
         }
     }
 

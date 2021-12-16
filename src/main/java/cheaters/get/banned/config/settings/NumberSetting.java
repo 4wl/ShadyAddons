@@ -31,7 +31,7 @@ implements Comparable<Integer> {
 
     @Override
     public boolean set(Object value) {
-        return super.set(MathHelper.clamp((int)((Integer)value), (int)this.min, (int)this.max));
+        return super.set(MathHelper.clamp_int((int)((Integer)value), (int)this.min, (int)this.max));
     }
 
     @Override

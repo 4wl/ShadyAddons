@@ -83,7 +83,7 @@ public class DungeonUtils {
                     if (DungeonUtils.dungeonRun.team.size() >= 5 || !name.contains("Mage") && !name.contains("Berserker") && !name.contains("Archer") && !name.contains("Tank") && !name.contains("Healer") || !(nameMatcher = namePattern.matcher(name = Utils.removeFormatting(name))).matches()) continue;
                     DungeonUtils.dungeonRun.team.add(nameMatcher.group(1).trim());
                 }
-                if (Shady.mc.world != null && dungeonRun != null && (ScoreboardUtils.scoreboardContains("30,30") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_1 || DungeonUtils.dungeonRun.floor == Floor.MASTER_1) || ScoreboardUtils.scoreboardContains("30,125") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_2 || DungeonUtils.dungeonRun.floor == Floor.MASTER_2) || ScoreboardUtils.scoreboardContains("30,225") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_3 || DungeonUtils.dungeonRun.floor == Floor.MASTER_3) || ScoreboardUtils.scoreboardContains("- Healthy") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_3 || DungeonUtils.dungeonRun.floor == Floor.MASTER_3) || ScoreboardUtils.scoreboardContains("30,344") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_4 || DungeonUtils.dungeonRun.floor == Floor.MASTER_4) || ScoreboardUtils.scoreboardContains("livid") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_5 || DungeonUtils.dungeonRun.floor == Floor.MASTER_5) || ScoreboardUtils.scoreboardContains("sadan") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_6 || DungeonUtils.dungeonRun.floor == Floor.MASTER_6) || ScoreboardUtils.scoreboardContains("necron") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_7 || DungeonUtils.dungeonRun.floor == Floor.MASTER_7))) {
+                if (Shady.mc.theWorld != null && dungeonRun != null && (ScoreboardUtils.scoreboardContains("30,30") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_1 || DungeonUtils.dungeonRun.floor == Floor.MASTER_1) || ScoreboardUtils.scoreboardContains("30,125") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_2 || DungeonUtils.dungeonRun.floor == Floor.MASTER_2) || ScoreboardUtils.scoreboardContains("30,225") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_3 || DungeonUtils.dungeonRun.floor == Floor.MASTER_3) || ScoreboardUtils.scoreboardContains("- Healthy") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_3 || DungeonUtils.dungeonRun.floor == Floor.MASTER_3) || ScoreboardUtils.scoreboardContains("30,344") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_4 || DungeonUtils.dungeonRun.floor == Floor.MASTER_4) || ScoreboardUtils.scoreboardContains("livid") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_5 || DungeonUtils.dungeonRun.floor == Floor.MASTER_5) || ScoreboardUtils.scoreboardContains("sadan") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_6 || DungeonUtils.dungeonRun.floor == Floor.MASTER_6) || ScoreboardUtils.scoreboardContains("necron") && (DungeonUtils.dungeonRun.floor == Floor.FLOOR_7 || DungeonUtils.dungeonRun.floor == Floor.MASTER_7))) {
                     DungeonUtils.dungeonRun.inBoss = true;
                 }
             } else {
@@ -125,13 +125,13 @@ public class DungeonUtils {
     }
 
     private static int calculateBonusScore() {
-        return (MayorAPI.isPaulBonus() ? 10 : 0) + (DungeonUtils.dungeonRun.mimicFound ? 5 : 0) + MathHelper.clamp((int)DungeonUtils.dungeonRun.cryptsFound, (int)0, (int)5);
+        return (MayorAPI.isPaulBonus() ? 10 : 0) + (DungeonUtils.dungeonRun.mimicFound ? 5 : 0) + MathHelper.clamp_int((int)DungeonUtils.dungeonRun.cryptsFound, (int)0, (int)5);
     }
 
     @SubscribeEvent
     public void onEntityDeath(LivingDeathEvent event) {
         EntityZombie entity;
-        if (DungeonUtils.onFloorWithMimic() && !DungeonUtils.dungeonRun.mimicFound && event.entity.getClass() == EntityZombie.class && (entity = (EntityZombie)event.entity).isChild() && entity.func_82169_q(0) == null && entity.func_82169_q(1) == null && entity.func_82169_q(2) == null && entity.func_82169_q(3) == null) {
+        if (DungeonUtils.onFloorWithMimic() && !DungeonUtils.dungeonRun.mimicFound && event.entity.getClass() == EntityZombie.class && (entity = (EntityZombie)event.entity).isChild() && entity.getCurrentArmor(0) == null && entity.getCurrentArmor(1) == null && entity.getCurrentArmor(2) == null && entity.getCurrentArmor(3) == null) {
             DungeonUtils.dungeonRun.mimicFound = true;
         }
     }

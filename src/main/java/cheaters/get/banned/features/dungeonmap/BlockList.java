@@ -32,7 +32,7 @@ public class BlockList {
         for (int x = xPosition - 16; x < xPosition + 16; ++x) {
             for (int z = zPosition - 16; z < zPosition + 16; ++z) {
                 Block block;
-                blockFrequency.put(block, blockFrequency.containsKey((Object)(block = Shady.mc.world.getBlockState(new BlockPos(x, yPosition, z)).getBlock())) ? blockFrequency.get((Object)block) + 1 : 1);
+                //blockFrequency.put(block, blockFrequency.containsKey((Object)(block = Shady.mc.theWorld.getBlockState(new BlockPos(x, yPosition, z)).getBlock())) ? blockFrequency.get((Object)block) + 1 : 1);
             }
         }
         return blockFrequency;

@@ -1,0 +1,16 @@
+{
+  "package": "cheaters.get.banned.mixins",
+  "refmap": "mixins.shady.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinChunk",
+    "MixinCrashReport",
+    "MixinGuiButton",
+    "MixinGuiContainer",
+    "MixinGuiMainMenu",
+    "MixinMinecraft",
+    "MixinModelEnderCrystal",
+    "MixinRendererLivingEntity",
+    "MixinSlashProgress"
+  ]
+}

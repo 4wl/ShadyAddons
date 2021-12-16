@@ -35,13 +35,13 @@ public class TerminalReach {
     private static final int[][][] sections = new int[][][]{new int[][]{{310, 251}, {288, 319}}, new int[][]{{287, 320}, {219, 342}}, new int[][]{{218, 251}, {196, 319}}, new int[][]{{287, 228}, {219, 250}}};
 
     private boolean isEnabled() {
-        return Config.terminalReach && Shady.mc.player != null && Shady.mc.player.isSneaking() && Shady.mc.player.getPosition().getY() < 150 && Shady.mc.player.getPosition().getY() > 100;
+        return Config.terminalReach && Shady.mc.thePlayer != null && Shady.mc.thePlayer.isSneaking() && Shady.mc.thePlayer.getPosition().getY() < 150 && Shady.mc.thePlayer.getPosition().getY() > 100;
     }
 
     @SubscribeEvent
     public void onRightClick(ClickEvent.Right event) {
         if (this.isEnabled() && this.selectedTerminalStand != null && this.selectedTerminal != null) {
-            Shady.mc.playerController.func_78768_b((EntityPlayer)Shady.mc.player, (Entity)this.selectedTerminalStand);
+            Shady.mc.playerController.interactWithEntitySendPacket((EntityPlayer)Shady.mc.thePlayer, (Entity)this.selectedTerminalStand);
             event.setCanceled(true);
         }
     }
@@ -63,7 +63,7 @@ public class TerminalReach {
             for (EntityArmorStand armorStand : armorStands) {
                 if (!armorStand.getCustomNameTag().equals("\u00a7cInactive Terminal")) continue;
                 if (!Config.outsideTerms && !TerminalReach.isInSection(armorStand.getPosition())) break;
-                terminals.sort(Comparator.comparingDouble(((EntityArmorStand)armorStand)::func_174818_b));
+                terminals.sort(Comparator.comparingDouble(((EntityArmorStand)armorStand)::getDistanceSq));
                 this.selectedTerminal = terminals.get(0);
                 this.selectedTerminalStand = armorStand;
             }
@@ -80,8 +80,8 @@ public class TerminalReach {
             inSection = true;
             break;
         }
-        x = Shady.mc.player.getPosition().getX();
-        z = Shady.mc.player.getPosition().getZ();
+        x = Shady.mc.thePlayer.getPosition().getX();
+        z = Shady.mc.thePlayer.getPosition().getZ();
         for (int[][] s : sections) {
             if (x <= s[0][0] && z >= s[0][1] && x >= s[1][0] && z <= s[1][1]) continue;
             inSection = false;

@@ -22,7 +22,7 @@ public class AbilityKeybind {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (Config.normalAbilityKeybind && KeybindUtils.get("Use Normal Ability").isPressed() && Utils.inDungeon) {
-            Shady.mc.player.dropItem(true);
+            Shady.mc.thePlayer.dropOneItem(true);
         }
     }
 }

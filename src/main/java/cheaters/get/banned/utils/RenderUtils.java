@@ -47,7 +47,7 @@ public class RenderUtils {
         GlStateManager.tryBlendFuncSeparate((int)770, (int)771, (int)1, (int)0);
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getBuffer();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.color((float)((float)c.getRed() / 255.0f), (float)((float)c.getGreen() / 255.0f), (float)((float)c.getBlue() / 255.0f), (float)((float)c.getAlpha() / 255.0f * alphaMultiplier));
         worldrenderer.begin(7, DefaultVertexFormats.POSITION);
         worldrenderer.pos(aabb.minX, aabb.minY, aabb.minZ).endVertex();
@@ -110,7 +110,7 @@ public class RenderUtils {
 
     public static void draw3DLine(Vec3 pos1, Vec3 pos2, Color color, int lineWidth, boolean depth, float partialTicks) {
         Entity render = Minecraft.getMinecraft().getRenderViewEntity();
-        WorldRenderer worldRenderer = Tessellator.getInstance().getBuffer();
+        WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
         double realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * (double)partialTicks;
         double realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * (double)partialTicks;
         double realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * (double)partialTicks;
@@ -127,8 +127,8 @@ public class RenderUtils {
         }
         GlStateManager.color((float)((float)color.getRed() / 255.0f), (float)((float)color.getGreen() / 255.0f), (float)((float)color.getBlue() / 255.0f), (float)((float)color.getAlpha() / 255.0f));
         worldRenderer.begin(3, DefaultVertexFormats.POSITION);
-        worldRenderer.pos(pos1.x, pos1.y, pos1.z).endVertex();
-        worldRenderer.pos(pos2.x, pos2.y, pos2.z).endVertex();
+        worldRenderer.pos(pos1.xCoord, pos1.yCoord, pos1.zCoord).endVertex();
+        worldRenderer.pos(pos2.xCoord, pos2.yCoord, pos2.zCoord).endVertex();
         Tessellator.getInstance().draw();
         GlStateManager.translate((double)realX, (double)realY, (double)realZ);
         if (!depth) {
@@ -173,7 +173,7 @@ public class RenderUtils {
     }
 
     public static void drawNametag(String str) {
-        FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fontrenderer = Minecraft.getMinecraft().fontRendererObj;
         float f = 1.6f;
         float f1 = 0.016666668f * f;
         GlStateManager.pushMatrix();
@@ -187,7 +187,7 @@ public class RenderUtils {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate((int)770, (int)771, (int)1, (int)0);
         Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getBuffer();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 0;
         int j = fontrenderer.getStringWidth(str) / 2;
         GlStateManager.disableTexture2D();
@@ -236,7 +236,7 @@ public class RenderUtils {
 
     public static void drawPlayerIcon(EntityPlayer player, int size, int x, int y) {
         if (player != null) {
-            Shady.mc.getTextureManager().bindTexture(Shady.mc.getConnection().getPlayerInfo(player.getUniqueID()).getLocationSkin());
+            Shady.mc.getTextureManager().bindTexture(Shady.mc.getNetHandler().getPlayerInfo(player.getUniqueID()).getLocationSkin());
             Gui.drawScaledCustomSizeModalRect((int)x, (int)y, (float)8.0f, (float)8.0f, (int)8, (int)8, (int)size, (int)size, (float)64.0f, (float)64.0f);
             if (player.isWearing(EnumPlayerModelParts.HAT)) {
                 Gui.drawScaledCustomSizeModalRect((int)x, (int)y, (float)40.0f, (float)8.0f, (int)8, (int)8, (int)size, (int)size, (float)64.0f, (float)64.0f);

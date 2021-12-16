@@ -1,122 +1,127 @@
+
+// For those who want the bleeding edge
 buildscript {
     repositories {
         jcenter()
-        mavenLocal()
-        mavenCentral()
-
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-
-        maven {
-            url = "https://plugins.gradle.org/m2"
-        }
-
         maven {
             name = 'SpongePowered'
-            url = 'https://repo.spongepowered.org/maven'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
     }
-
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.10"
-        classpath "org.spongepowered:mixingradle:0.6-SNAPSHOT"
-        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath 'com.google.code.gson:gson:2.8.4'
     }
 }
-
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: "org.spongepowered.mixin"
-apply plugin: "com.github.johnrengelman.shadow"
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-
-    maven {
-        name = 'spongepowered-repo'
-        url = 'https://repo.spongepowered.org/maven/'
-    }
-}
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 version = "2.2.3"
-group="cheaters.get.banned"
-archivesBaseName = "Shady"
+group="cheaers.get.banned"
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-compileJava.options.encoding = 'UTF-8'
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
 
 minecraft {
     version = "1.8.9-11.15.1.1722"
     runDir = "run"
-    mappings = "stable_22"
-    makeObfSourceJar = true
+
+    mappings = "stable_20"
+}
+
+repositories {
+    maven {
+        name = 'spongepowered-repo'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+    maven {
+        name = 'impactdevelopment-repo'
+        url = 'https://impactdevelopment.github.io/maven/'
+    }
+    maven {
+        name = 'swt-repo'
+        url = "http://maven-eclipse.github.io/maven"
+    }
+    maven {
+        name = "jitpack.io"
+        url = "https://jitpack.io"
+    }
+    mavenCentral()
 }
 
 dependencies {
-    compile("org.spongepowered:mixin:0.6.4-SNAPSHOT") {
-        exclude module: "launchwrapper"
+    compile("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+        exclude module: 'launchwrapper'
+        exclude module: 'guava'
+        exclude module: 'gson'
+        exclude module: 'commons-io'
     }
-    implementation 'org.jetbrains:annotations:15.0'
+    compile("com.google.code.gson:gson:2.8.4")
 }
 
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+processResources
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.version
+            inputs.property "mcversion", project.minecraft.version
 
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+                // replace version and mcversion
+                expand 'version':project.version, 'mcversion':project.minecraft.version
+            }
 
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
-
-mixin {
-    add sourceSets.main, "mixins.hydrogen.refmap.json"
-}
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
 
 shadowJar {
     dependencies {
         include(dependency('org.spongepowered:mixin'))
-        include(dependency('org.jetbrains:annotations'))
+        include(dependency('club.minnced:java-discord-rpc'))
     }
+    exclude 'dummyThing'
+    exclude 'LICENSE.txt'
+    classifier = new Date().format("dd.MM_HH.mm") // timestamp
+}
 
-    classifier = '##'
+mixin {
+    defaultObfuscationEnv searge
+    add sourceSets.main, 'mixins.shady.refmap.json'
+}
+
+reobf {
+    shadowJar {
+        mappingType = 'SEARGE'
+        classpath = sourceSets.main.compileClasspath
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'MixinConfigs': 'mixins.shady.json',
+                'tweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'TweakOrder': 0,
+                'FMLCorePluginContainsFMLMod': 'true',
+                'FMLCorePlugin': 'cheaters.get.banned.Shady',
+                'ForceLoadAsMod': 'true',
+                'FMLAT': 'shady_at.cfg'
+        )
+    }
 }
 
 build.dependsOn(shadowJar)
-
-jar {
-    manifest.attributes(
-            "MixinConfigs": 'mixins.shady.json',
-            "tweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
-            "TweakOrder": 0,
-            'FMLAT': 'hydrogen_at.cfg',
-          // need to change  "FMLCorePluginContainsFMLMod": 'tk.peanut.phosphor.injection.MixinLoader',
-    )
-}
-
-configurations {
-    mods
-    shade
-    compile.extendsFrom shade
-}
-
-apply plugin: "idea"
-
-idea {
-    module {
-        inheritOutputDirs = true
-    }
-}
-
-

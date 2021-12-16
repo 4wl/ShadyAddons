@@ -53,8 +53,8 @@ extends GuiScreen {
         if (Updater.update.description == null) {
             Updater.update.description = "\u00a77\u00a7oNo update description";
         }
-        int descriptionWidth = this.mc.fontRenderer.getStringWidth(Updater.update.description);
-        this.mc.fontRenderer.drawStringWithShadow(Updater.update.description, (float)(this.width - descriptionWidth) / 2.0f, (float)this.height / 2.0f - 7.0f, Color.WHITE.getRGB());
+        int descriptionWidth = this.mc.fontRendererObj.getStringWidth(Updater.update.description);
+        this.mc.fontRendererObj.drawStringWithShadow(Updater.update.description, (float)(this.width - descriptionWidth) / 2.0f, (float)this.height / 2.0f - 7.0f, Color.WHITE.getRGB());
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

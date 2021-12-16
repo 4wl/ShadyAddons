@@ -23,11 +23,11 @@ public class RoyalPigeonMacro {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         String chestName;
-        if (Utils.inSkyBlock && Config.royalPigeonMacro && event.gui instanceof GuiChest && (chestName = ((ContainerChest)((GuiChest)event.gui).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()).contains("Commissions") && Shady.mc.player.func_70694_bm().getDisplayName().contains("Royal Pigeon")) {
+        if (Utils.inSkyBlock && Config.royalPigeonMacro && event.gui instanceof GuiChest && (chestName = ((ContainerChest)((GuiChest)event.gui).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText()).contains("Commissions") && Shady.mc.thePlayer.getHeldItem().getDisplayName().contains("Royal Pigeon")) {
             for (int i = 0; i < 9; ++i) {
-                ItemStack item = Shady.mc.player.inventory.getStackInSlot(i);
+                ItemStack item = Shady.mc.thePlayer.inventory.getStackInSlot(i);
                 if (item == null || !item.getDisplayName().contains("Refined")) continue;
-                Shady.mc.player.inventory.currentItem = i;
+                Shady.mc.thePlayer.inventory.currentItem = i;
                 break;
             }
         }

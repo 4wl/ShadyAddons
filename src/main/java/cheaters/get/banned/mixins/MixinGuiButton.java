@@ -25,9 +25,9 @@ public abstract class MixinGuiButton {
     @Shadow
     public int id;
     @Shadow
-    public int x;
+    public int xPosition;
     @Shadow
-    public int y;
+    public int yPosition;
     @Shadow
     public String displayString;
     @Shadow
@@ -43,10 +43,10 @@ public abstract class MixinGuiButton {
     public void drawCleanButton(Minecraft mc, int mouseX, int mouseY, CallbackInfo callbackInfo) {
         if (Config.useCleanButtons) {
             if (this.visible) {
-                this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+                this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
                 Color color = this.hovered ? new Color(30, 30, 30, 64) : new Color(0, 0, 0, 64);
-                Gui.drawRect((int)this.x, (int)this.y, (int)(this.x + this.width), (int)(this.y + this.height), (int)color.getRGB());
-                FontUtils.drawCenteredString(this.displayString, this.x + this.width / 2, this.y + this.height / 2);
+                Gui.drawRect((int)this.xPosition, (int)this.yPosition, (int)(this.xPosition + this.width), (int)(this.yPosition + this.height), (int)color.getRGB());
+                FontUtils.drawCenteredString(this.displayString, this.xPosition + this.width / 2, this.yPosition + this.height / 2);
             }
             callbackInfo.cancel();
         }

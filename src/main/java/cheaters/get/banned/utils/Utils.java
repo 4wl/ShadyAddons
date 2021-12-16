@@ -120,16 +120,16 @@ public class Utils {
 
     public static List<String> getLore(ItemStack item) {
         if (item != null) {
-            return item.getTooltip((EntityPlayer)Shady.mc.player, false);
+            return item.getTooltip((EntityPlayer)Shady.mc.thePlayer, false);
         }
         return null;
     }
 
     public static String getInventoryName() {
-        if (Shady.mc.player == null || Shady.mc.world == null) {
+        if (Shady.mc.thePlayer == null || Shady.mc.theWorld == null) {
             return "null";
         }
-        return ((Slot)Shady.mc.player.openContainer.inventorySlots.get((int)0)).inventory.getName();
+        return ((Slot)Shady.mc.thePlayer.openContainer.inventorySlots.get((int)0)).inventory.getName();
     }
 
     public static String getGuiName(GuiScreen gui) {
@@ -140,16 +140,16 @@ public class Utils {
     }
 
     public static void sendMessage(String message) {
-        if (Shady.mc.player != null && Shady.mc.world != null) {
+        if (Shady.mc.thePlayer != null && Shady.mc.theWorld != null) {
             if (!message.contains("\u00a7")) {
                 message = message.replace("&", "\u00a7");
             }
-            Shady.mc.player.sendMessage((IChatComponent)new ChatComponentText(message));
+            Shady.mc.thePlayer.addChatMessage((IChatComponent)new ChatComponentText(message));
         }
     }
 
     public static void sendMessageAsPlayer(String message) {
-        Shady.mc.player.sendChatMessage(message);
+        Shady.mc.thePlayer.sendChatMessage(message);
     }
 
     public static void sendModMessage(String message) {
@@ -165,7 +165,7 @@ public class Utils {
     }
 
     public static boolean isInteractable(Block block) {
-        return new ArrayList<Block>(Arrays.asList(new Block[]{Blocks.CHEST, Blocks.LEVER, Blocks.TRAPPED_CHEST, Blocks.WOODEN_BUTTON, Blocks.STONE_BUTTON, Blocks.SKULL})).contains((Object)block);
+        return new ArrayList<Block>(Arrays.asList(new Block[]{Blocks.chest, Blocks.lever, Blocks.trapped_chest, Blocks.wooden_button, Blocks.stone_button, Blocks.skull})).contains((Object)block);
     }
 
     public static void copyToClipboard(String text) {
@@ -194,8 +194,8 @@ public class Utils {
             return;
         }
         if (this.ticks % 20 == 0) {
-            if (Shady.mc.player != null && Shady.mc.world != null) {
-                ScoreObjective scoreboardObj = Shady.mc.world.getScoreboard().getObjectiveInDisplaySlot(1);
+            if (Shady.mc.thePlayer != null && Shady.mc.theWorld != null) {
+                ScoreObjective scoreboardObj = Shady.mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
                 if (scoreboardObj != null) {
                     inSkyBlock = Utils.removeFormatting(scoreboardObj.getDisplayName()).contains("SKYBLOCK");
                 }

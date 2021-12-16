@@ -30,11 +30,11 @@ public abstract class MixinMinecraft {
     @Mutable
     @Shadow
     @Final
-    private static ResourceLocation LOCATION_MOJANG_PNG;
+    private static ResourceLocation locationMojangPng;
 
     @Inject(method={"drawSplashScreen"}, at={@At(value="HEAD")})
     public void modifyMojangLogo(TextureManager textureManagerInstance, CallbackInfo ci) {
-        LOCATION_MOJANG_PNG = new ResourceLocation("shadyaddons:splash.png");
+        locationMojangPng = new ResourceLocation("shadyaddons:splash.png");
     }
 
     @Inject(method={"refreshResources"}, at={@At(value="HEAD")}, cancellable=true)

@@ -21,10 +21,10 @@ import org.lwjgl.util.vector.Vector3f;
 public class RayCastUtils {
     public static boolean isFacingBlock(BlockPos block, float range) {
         float stepSize = 0.15f;
-        if (Shady.mc.player != null && Shady.mc.world != null) {
-            Vector3f position = new Vector3f((float)Shady.mc.player.posX, (float)Shady.mc.player.posY + Shady.mc.player.getEyeHeight(), (float)Shady.mc.player.posZ);
-            Vec3 look = Shady.mc.player.getLook(0.0f);
-            Vector3f step = new Vector3f((float)look.x, (float)look.y, (float)look.z);
+        if (Shady.mc.thePlayer != null && Shady.mc.theWorld != null) {
+            Vector3f position = new Vector3f((float)Shady.mc.thePlayer.posX, (float)Shady.mc.thePlayer.posY + Shady.mc.thePlayer.getEyeHeight(), (float)Shady.mc.thePlayer.posZ);
+            Vec3 look = Shady.mc.thePlayer.getLook(0.0f);
+            Vector3f step = new Vector3f((float)look.xCoord, (float)look.yCoord, (float)look.zCoord);
             step.scale(stepSize / step.length());
             int i = 0;
             while ((double)i < Math.floor(range / stepSize) - 2.0) {
@@ -41,14 +41,14 @@ public class RayCastUtils {
 
     public static <T extends Entity> List<T> getFacedEntityOfType(Class<T> _class, float range) {
         float stepSize = 0.5f;
-        if (Shady.mc.player != null && Shady.mc.world != null) {
-            Vector3f position = new Vector3f((float)Shady.mc.player.posX, (float)Shady.mc.player.posY + Shady.mc.player.getEyeHeight(), (float)Shady.mc.player.posZ);
-            Vec3 look = Shady.mc.player.getLook(0.0f);
-            Vector3f step = new Vector3f((float)look.x, (float)look.y, (float)look.z);
+        if (Shady.mc.thePlayer != null && Shady.mc.theWorld != null) {
+            Vector3f position = new Vector3f((float)Shady.mc.thePlayer.posX, (float)Shady.mc.thePlayer.posY + Shady.mc.thePlayer.getEyeHeight(), (float)Shady.mc.thePlayer.posZ);
+            Vec3 look = Shady.mc.thePlayer.getLook(0.0f);
+            Vector3f step = new Vector3f((float)look.xCoord, (float)look.yCoord, (float)look.zCoord);
             step.scale(stepSize / step.length());
             int i = 0;
             while ((double)i < Math.floor(range / stepSize) - 2.0) {
-                List entities = Shady.mc.world.getEntitiesWithinAABB(_class, new AxisAlignedBB((double)position.x - 0.5, (double)position.y - 0.5, (double)position.z - 0.5, (double)position.x + 0.5, (double)position.y + 0.5, (double)position.z + 0.5));
+                List entities = Shady.mc.theWorld.getEntitiesWithinAABB(_class, new AxisAlignedBB((double)position.x - 0.5, (double)position.y - 0.5, (double)position.z - 0.5, (double)position.x + 0.5, (double)position.y + 0.5, (double)position.z + 0.5));
                 if (!entities.isEmpty()) {
                     return entities;
                 }

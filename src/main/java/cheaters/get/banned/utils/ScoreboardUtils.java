@@ -41,10 +41,10 @@ public class ScoreboardUtils {
 
     public static List<String> getScoreboard() {
         ArrayList<String> lines = new ArrayList<String>();
-        if (Minecraft.getMinecraft().world == null) {
+        if (Minecraft.getMinecraft().theWorld == null) {
             return lines;
         }
-        Scoreboard scoreboard = Minecraft.getMinecraft().world.getScoreboard();
+        Scoreboard scoreboard = Minecraft.getMinecraft().theWorld.getScoreboard();
         if (scoreboard == null) {
             return lines;
         }
@@ -52,13 +52,13 @@ public class ScoreboardUtils {
         if (objective == null) {
             return lines;
         }
-        ArrayList scores = scoreboard.getSortedScores(objective);
+        /*ArrayList scores = scoreboard.getSortedScores(objective);
         ArrayList list = scores.stream().filter(input -> input != null && input.getPlayerName() != null && !input.getPlayerName().startsWith("#")).collect(Collectors.toList());
         scores = list.size() > 15 ? Lists.newArrayList((Iterable)Iterables.skip(list, (int)(scores.size() - 15))) : list;
         for (Score score : scores) {
             ScorePlayerTeam team = scoreboard.getPlayersTeam(score.getPlayerName());
             lines.add(ScorePlayerTeam.formatPlayerName((Team)team, (String)score.getPlayerName()));
-        }
+        }*/
         return lines;
     }
 

@@ -22,8 +22,8 @@ extends ConfigInput {
 
     public SelectInput(SelectSetting setting, int x, int y) {
         super(setting, x, y);
-        this.leftWidth = Shady.mc.fontRenderer.getStringWidth("<");
-        this.rightWidth = Shady.mc.fontRenderer.getStringWidth(">");
+        this.leftWidth = Shady.mc.fontRendererObj.getStringWidth("<");
+        this.rightWidth = Shady.mc.fontRendererObj.getStringWidth(">");
         this.gap = 3;
         this.leftHovered = false;
         this.rightHovered = false;
@@ -32,12 +32,12 @@ extends ConfigInput {
         this.updateText();
     }
 
-    public void func_146112_a(Minecraft mc, int mouseX, int mouseY) {
-        this.rightHovered = mouseX >= this.x - this.rightWidth - this.gap && mouseY >= this.y && mouseX < this.x && mouseY < this.y + this.height;
-        this.leftHovered = mouseX >= this.x - this.width && mouseY >= this.y && mouseX < this.x - this.width + this.leftWidth + this.gap && mouseY < this.y + this.height;
-        Shady.mc.fontRenderer.drawString((this.leftHovered ? "\u00a7a" : "\u00a77") + "<", this.x - this.width, this.y, -1);
-        Shady.mc.fontRenderer.drawString(this.displayString, this.x - this.width + this.leftWidth + this.gap, this.y, -1);
-        Shady.mc.fontRenderer.drawString((this.rightHovered ? "\u00a7a" : "\u00a77") + ">", this.x - this.rightWidth, this.y, -1);
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+        this.rightHovered = mouseX >= this.xPosition - this.rightWidth - this.gap && mouseY >= this.yPosition && mouseX < this.xPosition && mouseY < this.yPosition + this.height;
+        this.leftHovered = mouseX >= this.xPosition - this.width && mouseY >= this.yPosition && mouseX < this.xPosition - this.width + this.leftWidth + this.gap && mouseY < this.yPosition + this.height;
+        Shady.mc.fontRendererObj.drawString((this.leftHovered ? "\u00a7a" : "\u00a77") + "<", this.xPosition - this.width, this.yPosition, -1);
+        Shady.mc.fontRendererObj.drawString(this.displayString, this.xPosition - this.width + this.leftWidth + this.gap, this.yPosition, -1);
+        Shady.mc.fontRendererObj.drawString((this.rightHovered ? "\u00a7a" : "\u00a77") + ">", this.xPosition - this.rightWidth, this.yPosition, -1);
     }
 
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
@@ -56,7 +56,7 @@ extends ConfigInput {
 
     public void updateText() {
         this.displayString = this.setting.options[this.setting.get(Integer.class)];
-        this.width = Shady.mc.fontRenderer.getStringWidth(this.displayString) + this.rightWidth + this.leftWidth + this.gap * 2;
+        this.width = Shady.mc.fontRendererObj.getStringWidth(this.displayString) + this.rightWidth + this.leftWidth + this.gap * 2;
     }
 }
 

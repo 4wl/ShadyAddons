@@ -48,7 +48,7 @@ public class FontUtils {
     public static void drawString(String text, int x, int y, boolean shadow) {
         String[] lines;
         for (String line : lines = text.split("\n")) {
-            Shady.mc.fontRenderer.drawString(line, (float)x, (float)y, Color.WHITE.getRGB(), shadow);
+            Shady.mc.fontRendererObj.drawString(line, (float)x, (float)y, Color.WHITE.getRGB(), shadow);
             y += FontUtils.getLineHeight() + 1;
         }
     }
@@ -62,7 +62,7 @@ public class FontUtils {
         String[] lines = text.split("\n");
         int longestLine = 0;
         for (String line : lines) {
-            int lineWidth = Shady.mc.fontRenderer.getStringWidth(line);
+            int lineWidth = Shady.mc.fontRendererObj.getStringWidth(line);
             if (lineWidth <= longestLine) continue;
             longestLine = lineWidth;
         }
@@ -70,7 +70,7 @@ public class FontUtils {
     }
 
     public static int getLineHeight() {
-        return Shady.mc.fontRenderer.FONT_HEIGHT;
+        return Shady.mc.fontRendererObj.FONT_HEIGHT;
     }
 
     public static void drawScaledString(String string, float scale, int x, int y, boolean shadow) {

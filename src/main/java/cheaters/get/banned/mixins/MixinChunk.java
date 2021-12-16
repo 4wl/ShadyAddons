@@ -31,7 +31,7 @@ public abstract class MixinChunk {
     @Inject(method={"setBlockState"}, at={@At(value="HEAD")})
     private void onBlockChange(BlockPos position, IBlockState newBlock, CallbackInfoReturnable<IBlockState> callbackInfoReturnable) {
         IBlockState oldBlock = this.getBlockState(position);
-        if (oldBlock != newBlock && Shady.mc.world != null) {
+        if (oldBlock != newBlock && Shady.mc.theWorld != null) {
             try {
                 MinecraftForge.EVENT_BUS.post((Event)new BlockChangeEvent(position, oldBlock, newBlock));
             }

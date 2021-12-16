@@ -19,7 +19,7 @@ public class AutoGG {
     public void onChat(ClientChatReceivedEvent event) {
         String message;
         if (Config.autoGg && !Utils.inSkyBlock && event.type == 0 && (message = event.message.getFormattedText()).contains("Reward Summary") && !message.contains(":") && !message.contains("]")) {
-            Minecraft.getMinecraft().player.sendChatMessage("/ac gg");
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/ac gg");
         }
     }
 }

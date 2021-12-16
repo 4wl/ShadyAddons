@@ -86,29 +86,29 @@ public class DungeonScanner {
 
     private static DungeonLayout.ConnectorTile getConnectorAt(int x, int z, EnumFacing direction) {
         BlockPos doorBlock = new BlockPos(x, 69, z);
-        IBlockState blockState = Shady.mc.world.getBlockState(doorBlock);
+        IBlockState blockState = Shady.mc.theWorld.getBlockState(doorBlock);
         Block block = blockState.getBlock();
         DungeonLayout.ConnectorTile.Type type = DungeonLayout.ConnectorTile.Type.CONNECTOR;
-        if (block == Blocks.COAL_BLOCK) {
+        if (block == Blocks.coal_block) {
             type = DungeonLayout.ConnectorTile.Type.WITHER_DOOR;
         }
-        if (block == Blocks.STAINED_HARDENED_CLAY && blockState.getValue((IProperty)BlockColored.COLOR) == EnumDyeColor.RED) {
+        if (block == Blocks.stained_hardened_clay && blockState.getValue((IProperty)BlockColored.COLOR) == EnumDyeColor.RED) {
             type = DungeonLayout.ConnectorTile.Type.BLOOD_DOOR;
         }
-        if (block == Blocks.MONSTER_EGG && blockState.getValue((IProperty)BlockSilverfish.VARIANT) == BlockSilverfish.EnumType.CHISELED_STONEBRICK) {
+        if (block == Blocks.monster_egg && blockState.getValue((IProperty)BlockSilverfish.VARIANT) == BlockSilverfish.EnumType.CHISELED_STONEBRICK) {
             type = DungeonLayout.ConnectorTile.Type.ENTRANCE_DOOR;
         }
-        if (block == Blocks.AIR) {
-            type = Shady.mc.world.getBlockState(doorBlock.down(2)).getBlock() == Blocks.BEDROCK && Shady.mc.world.getBlockState(doorBlock.up(4)).getBlock() != Blocks.AIR ? DungeonLayout.ConnectorTile.Type.NORMAL_DOOR : (DungeonScanner.isColumnNotEmpty(x, z) ? DungeonLayout.ConnectorTile.Type.CONNECTOR : null);
+        if (block == Blocks.air) {
+            type = Shady.mc.theWorld.getBlockState(doorBlock.down(2)).getBlock() == Blocks.bedrock && Shady.mc.theWorld.getBlockState(doorBlock.up(4)).getBlock() != Blocks.air ? DungeonLayout.ConnectorTile.Type.NORMAL_DOOR : (DungeonScanner.isColumnNotEmpty(x, z) ? DungeonLayout.ConnectorTile.Type.CONNECTOR : null);
         }
         return new DungeonLayout.ConnectorTile(x, z, type, direction);
     }
 
     @SubscribeEvent
     public void onBlockChange(BlockChangeEvent event) {
-        if (DungeonMap.activeDungeonLayout != null && (event.oldBlock.getBlock() == Blocks.COAL_BLOCK || event.oldBlock.getBlock() == Blocks.STAINED_HARDENED_CLAY) && event.newBlock.getBlock() == Blocks.AIR) {
+        if (DungeonMap.activeDungeonLayout != null && (event.oldBlock.getBlock() == Blocks.coal_block || event.oldBlock.getBlock() == Blocks.stained_hardened_clay) && event.newBlock.getBlock() == Blocks.air) {
             for (DungeonLayout.ConnectorTile door : DungeonMap.activeDungeonLayout.connectorTiles) {
-                if ((door.isOpen || event.oldBlock.getBlock() != Blocks.COAL_BLOCK || door.type != DungeonLayout.ConnectorTile.Type.WITHER_DOOR) && (event.oldBlock.getBlock() != Blocks.STAINED_HARDENED_CLAY || door.type != DungeonLayout.ConnectorTile.Type.BLOOD_DOOR) || !event.position.equals((Object)door.getPosition(69))) continue;
+                if ((door.isOpen || event.oldBlock.getBlock() != Blocks.coal_block || door.type != DungeonLayout.ConnectorTile.Type.WITHER_DOOR) && (event.oldBlock.getBlock() != Blocks.stained_hardened_clay || door.type != DungeonLayout.ConnectorTile.Type.BLOOD_DOOR) || !event.position.equals((Object)door.getPosition(69))) continue;
                 door.isOpen = true;
             }
         }
@@ -116,7 +116,7 @@ public class DungeonScanner {
 
     private static boolean isColumnNotEmpty(int x, int z) {
         for (int y = 256; y > 0; --y) {
-            if (Shady.mc.world == null || Shady.mc.world.isAirBlock(new BlockPos(x, y, z))) continue;
+            if (Shady.mc.theWorld == null || Shady.mc.theWorld.isAirBlock(new BlockPos(x, y, z))) continue;
             return true;
         }
         return false;

@@ -25,20 +25,20 @@ public class HttpUtils {
 
     public static String fetch(String url, boolean includeUserAgent) {
         String response = null;
-        HttpClientBuilder client = HttpClients.custom().addInterceptorFirst((request, context) -> {
+        /*HttpClientBuilder client = HttpClients.custom().addInterceptorFirst((request, context) -> {
             if (!request.containsHeader("Pragma")) {
                 request.addHeader("Pragma", "no-cache");
             }
             if (!request.containsHeader("Cache-Control")) {
                 request.addHeader("Cache-Control", "no-cache");
             }
-        });
+        });*/
         if (includeUserAgent) {
-            client.setUserAgent("ShadyAddons/2.2.3");
+          //  client.setUserAgent("ShadyAddons/2.2.3");
         }
         try {
             HttpGet request2 = new HttpGet(url);
-            response = EntityUtils.toString((HttpEntity)client.build().execute((HttpUriRequest)request2).getEntity(), (String)"UTF-8");
+            //response = EntityUtils.toString((HttpEntity)client.build().execute((HttpUriRequest)request2).getEntity(), (String)"UTF-8");
         }
         catch (Exception exception) {
             // empty catch block

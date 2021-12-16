@@ -75,19 +75,19 @@ public class AutoAlignArrows {
     }
 
     private static boolean isEnabled() {
-        return Config.autoArrowAlign && Shady.mc.player != null && Shady.mc.player.getPosition().getY() > 100 && Shady.mc.player.getPosition().getY() < 150 && AutoAlignArrows.isInSection3(Shady.mc.player.getPosition());
+        return Config.autoArrowAlign && Shady.mc.thePlayer != null && Shady.mc.thePlayer.getPosition().getY() > 100 && Shady.mc.thePlayer.getPosition().getY() < 150 && AutoAlignArrows.isInSection3(Shady.mc.thePlayer.getPosition());
     }
 
     private static void addItemFrames() {
-        for (Entity entity : Shady.mc.world.loadedEntityList) {
+        for (Entity entity : Shady.mc.theWorld.loadedEntityList) {
             if (!(entity instanceof EntityItemFrame) || !AutoAlignArrows.isInSection3(entity.getPosition())) continue;
             itemFrames.put(entity.getPosition(), new ItemFrame((EntityItemFrame)entity));
         }
     }
 
     private static boolean isInSection3(BlockPos blockPos) {
-        int x = Shady.mc.player.getPosition().getX();
-        int z = Shady.mc.player.getPosition().getZ();
+        int x = Shady.mc.thePlayer.getPosition().getX();
+        int z = Shady.mc.thePlayer.getPosition().getZ();
         return x < 218 && z > 251 && x > 196 && z < 319;
     }
 
@@ -99,10 +99,10 @@ public class AutoAlignArrows {
 
         public ItemFrame(EntityItemFrame entity) {
             this.entity = entity;
-            if (entity.getDisplayedItem().getItem() == Items.ARROW) {
+            if (entity.getDisplayedItem().getItem() == Items.arrow) {
                 this.type = Type.NORMAL;
             }
-            if (entity.getDisplayedItem().getItem() == Item.getItemFromBlock((Block)Blocks.WOOL)) {
+            if (entity.getDisplayedItem().getItem() == Item.getItemFromBlock((Block)Blocks.wool)) {
                 if (entity.getDisplayedItem().getItemDamage() == 5) {
                     this.type = Type.START;
                 }

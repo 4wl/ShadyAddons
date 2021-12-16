@@ -52,8 +52,8 @@ public class ConnectFourSolver {
     public void onTick(TickEndEvent event) {
         if (Config.connectFourAI && Utils.inSkyBlock) {
             boolean bl = this.inGame = Shady.mc.currentScreen instanceof GuiChest && Utils.getInventoryName().startsWith("Four in a Row - ");
-            if (this.inGame && Shady.mc.player.openContainer.inventorySlots.get(1) != null && ((Slot)Shady.mc.player.openContainer.inventorySlots.get(1)).getStack() != null) {
-                boolean bl2 = this.isOurTurn = ((Slot)Shady.mc.player.openContainer.inventorySlots.get(1)).getStack().getItem() == Items.ITEM_FRAME;
+            if (this.inGame && Shady.mc.thePlayer.openContainer.inventorySlots.get(1) != null && ((Slot)Shady.mc.thePlayer.openContainer.inventorySlots.get(1)).getStack() != null) {
+                boolean bl2 = this.isOurTurn = ((Slot)Shady.mc.thePlayer.openContainer.inventorySlots.get(1)).getStack().getItem() == Items.item_frame;
             }
             if (!this.isOurTurn || !this.inGame) {
                 this.solutionSlot = -1;
@@ -64,7 +64,7 @@ public class ConnectFourSolver {
             if (this.isOurTurn && !this.calculating && this.inGame && this.solutionSlot == -1) {
                 this.calculating = true;
                 this.thread = new Thread(() -> {
-                    ConnectFourAlgorithm.Board board = this.serializeInventory(Shady.mc.player.openContainer);
+                    ConnectFourAlgorithm.Board board = this.serializeInventory(Shady.mc.thePlayer.openContainer);
                     ConnectFourAlgorithm algorithm = new ConnectFourAlgorithm(board);
                     int column = algorithm.getAIMove();
                     algorithm.board.placeMove(column, 1);
@@ -87,10 +87,10 @@ public class ConnectFourSolver {
             int row = slot.slotNumber / 9;
             int column = (slot.slotNumber - 1) % 9;
             Item item = slot.getStack().getItem();
-            if (item == Items.ITEM_FRAME || item == Items.PAINTING) {
+            if (item == Items.item_frame || item == Items.painting) {
                 board.board[row][column] = 0;
             }
-            if (item != Item.getItemFromBlock((Block)Blocks.STAINED_HARDENED_CLAY)) continue;
+            if (item != Item.getItemFromBlock((Block)Blocks.stained_hardened_clay)) continue;
             if (slot.getStack().getItemDamage() == 1) {
                 board.board[row][column] = 2;
                 continue;
@@ -117,8 +117,8 @@ public class ConnectFourSolver {
     @SubscribeEvent
     public void onDrawSlot(DrawSlotEvent event) {
         if (Config.connectFourAI && Utils.inSkyBlock && this.inGame && this.solutionSlot == event.slot.slotNumber) {
-            int x = event.slot.xPos;
-            int y = event.slot.yPos;
+            int x = event.slot.xDisplayPosition;
+            int y = event.slot.yDisplayPosition;
             Gui.drawRect((int)x, (int)y, (int)(x + 16), (int)(y + 16), (int)Color.GREEN.getRGB());
         }
     }

@@ -45,7 +45,7 @@ public class HideSummons {
         }
         if (entity instanceof EntityZombie || entity instanceof EntitySkeleton) {
             for (int i = 0; i < 5; ++i) {
-                ItemStack item = ((EntityMob)entity).func_71124_b(i);
+                ItemStack item = ((EntityMob)entity).getEquipmentInSlot(i);
                 if (!summonItemIDs.contains(Utils.getSkyBlockID(item))) continue;
                 return true;
             }
@@ -55,7 +55,7 @@ public class HideSummons {
 
     @SubscribeEvent
     public void onPreRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
-        if (Utils.inSkyBlock && !Utils.inDungeon && HideSummons.isSummon((Entity)event.entity) && Config.hideSummons && event.entity.getDistance((Entity)Shady.mc.player) < 5.0f) {
+        if (Utils.inSkyBlock && !Utils.inDungeon && HideSummons.isSummon((Entity)event.entity) && Config.hideSummons && event.entity.getDistanceToEntity((Entity)Shady.mc.thePlayer) < 5.0f) {
             event.setCanceled(true);
         }
     }
@@ -66,14 +66,14 @@ public class HideSummons {
             Entity excludedEntity = Shady.mc.getRenderViewEntity();
             double reach = Shady.mc.playerController.getBlockReachDistance();
             Vec3 look = excludedEntity.getLook(0.0f);
-            AxisAlignedBB boundingBox = excludedEntity.getEntityBoundingBox().expand(look.x * reach, look.y * reach, look.z * reach).grow(1.0, 1.0, 1.0);
-            List entitiesInRange = Shady.mc.world.getEntitiesWithinAABBExcludingEntity(excludedEntity, boundingBox);
-            entitiesInRange.removeIf(entity -> !entity.canBeCollidedWith());
-            entitiesInRange.removeIf(HideSummons::isSummon);
+            AxisAlignedBB boundingBox = excludedEntity.getEntityBoundingBox().addCoord(look.xCoord * reach, look.yCoord * reach, look.zCoord * reach).expand(1.0, 1.0, 1.0);
+            List entitiesInRange = Shady.mc.theWorld.getEntitiesWithinAABBExcludingEntity(excludedEntity, boundingBox);
+            //entitiesInRange.removeIf(entity -> !entity.canBeCollidedWith());
+            //entitiesInRange.removeIf(HideSummons::isSummon);
             if (entitiesInRange.size() > 0) {
                 event.setCanceled(true);
-                Shady.mc.player.func_71038_i();
-                Shady.mc.playerController.attackEntity((EntityPlayer)Shady.mc.player, (Entity)entitiesInRange.get(0));
+                Shady.mc.thePlayer.swingItem();
+                Shady.mc.playerController.attackEntity((EntityPlayer)Shady.mc.thePlayer, (Entity)entitiesInRange.get(0));
             }
         }
     }

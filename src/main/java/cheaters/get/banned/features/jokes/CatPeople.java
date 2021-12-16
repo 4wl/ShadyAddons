@@ -50,11 +50,11 @@ public class CatPeople {
             if (directory == null) continue;
             System.out.println("DIRECTORY FOUND " + directory.getAbsolutePath());
             Collection images = FileUtils.listFiles((File)directory, (String[])new String[]{"png"}, (boolean)true);
-            images.removeIf(image -> image.getName().equals("pack.png"));
+           // images.removeIf(image -> image.getName().equals("pack.png"));
             CatPeople.images.clear();
-            for (File image2 : images) {
+         /*   for (File image2 : images) {
                 CatPeople.images.add(new ResourceLocation("shadyaddons", image2.getParentFile().getName() + "/" + image2.getName()));
-            }
+            }*/
             System.out.println("IMAGES " + images);
             usingPack = true;
             return;
@@ -68,11 +68,11 @@ public class CatPeople {
         Collections.shuffle(images);
         switch (type) {
             case 0: {
-                catPerson.image = ArrayUtils.getFirstMatch(images, image -> image.getPath().contains("catgirl"));
+                catPerson.image = ArrayUtils.getFirstMatch(images, image -> image.getResourcePath().contains("catgirl"));
                 break;
             }
             case 1: {
-                catPerson.image = ArrayUtils.getFirstMatch(images, image -> image.getPath().contains("catboy"));
+                catPerson.image = ArrayUtils.getFirstMatch(images, image -> image.getResourcePath().contains("catboy"));
                 break;
             }
             case 2: {
@@ -80,7 +80,7 @@ public class CatPeople {
                 return;
             }
             case 3: {
-                catPerson.image = ArrayUtils.getFirstMatch(images, image -> image.getPath().contains("realcat"));
+                catPerson.image = ArrayUtils.getFirstMatch(images, image -> image.getResourcePath().contains("realcat"));
             }
         }
         catPerson.side = CatPerson.Side.values()[MathUtils.random(0, 3)];

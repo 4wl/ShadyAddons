@@ -59,9 +59,9 @@ public class StonklessStonk {
 
     private static boolean isEnabled() {
         boolean isEnabled;
-        boolean bl = isEnabled = Utils.inDungeon && Shady.mc.player != null;
+        boolean bl = isEnabled = Utils.inDungeon && Shady.mc.thePlayer != null;
         if (!Config.alwaysOn && isEnabled) {
-            boolean bl2 = isEnabled = Config.stonklessStonk && Shady.mc.player.isSneaking();
+            boolean bl2 = isEnabled = Config.stonklessStonk && Shady.mc.thePlayer.isSneaking();
         }
         if (Config.disableInBoss && isEnabled) {
             isEnabled = DungeonUtils.dungeonRun != null && !DungeonUtils.dungeonRun.inBoss;
@@ -71,10 +71,10 @@ public class StonklessStonk {
 
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
-        if (Shady.mc.player == null) {
+        if (Shady.mc.thePlayer == null) {
             return;
         }
-        BlockPos playerPosition = Shady.mc.player.getPosition();
+        BlockPos playerPosition = Shady.mc.thePlayer.getPosition();
         if (StonklessStonk.isEnabled() && (lastCheckedPosition == null || !lastCheckedPosition.equals((Object)playerPosition))) {
             blockList.clear();
             lastCheckedPosition = playerPosition;
@@ -82,7 +82,7 @@ public class StonklessStonk {
                 for (int y = playerPosition.getY() - 6; y < playerPosition.getY() + 6; ++y) {
                     for (int z = playerPosition.getZ() - 6; z < playerPosition.getZ() + 6; ++z) {
                         BlockPos position = new BlockPos(x, y, z);
-                        Block block = Shady.mc.world.getBlockState(position).getBlock();
+                        Block block = Shady.mc.theWorld.getBlockState(position).getBlock();
                         if (!StonklessStonk.shouldEspBlock(block, position)) continue;
                         blockList.put(position, block);
                     }
@@ -129,9 +129,9 @@ public class StonklessStonk {
             }
             if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
                 usedBlocks.add(selectedBlock);
-                Shady.mc.player.setSneaking(false);
-                if (Shady.mc.playerController.func_178890_a(Shady.mc.player, Shady.mc.world, Shady.mc.player.inventory.getCurrentItem(), selectedBlock, EnumFacing.fromAngle((double)Shady.mc.player.rotationYaw), new Vec3(Math.random(), Math.random(), Math.random()))) {
-                    Shady.mc.player.func_71038_i();
+                Shady.mc.thePlayer.setSneaking(false);
+                if (Shady.mc.playerController.onPlayerRightClick(Shady.mc.thePlayer, Shady.mc.theWorld, Shady.mc.thePlayer.inventory.getCurrentItem(), selectedBlock, EnumFacing.fromAngle((double)Shady.mc.thePlayer.rotationYaw), new Vec3(Math.random(), Math.random(), Math.random()))) {
+                    Shady.mc.thePlayer.swingItem();
                 }
             }
         }
@@ -139,10 +139,10 @@ public class StonklessStonk {
 
     @SubscribeEvent
     public void onBlockChange(BlockChangeEvent event) {
-        if (Shady.mc.world == null || Shady.mc.player == null) {
+        if (Shady.mc.theWorld == null || Shady.mc.thePlayer == null) {
             return;
         }
-        if (event.position.distanceSq((Vec3i)Shady.mc.player.getPosition()) > (double)range) {
+        if (event.position.distanceSq((Vec3i)Shady.mc.thePlayer.getPosition()) > (double)range) {
             return;
         }
         if (usedBlocks.contains((Object)event.position)) {
@@ -159,8 +159,8 @@ public class StonklessStonk {
         if (block instanceof BlockChest || block instanceof BlockLever) {
             return true;
         }
-        if (block instanceof BlockSkull && (tileEntity = (TileEntitySkull)Shady.mc.world.getTileEntity(position)).getSkullType() == 3) {
-            Property property = (Property)ArrayUtils.firstOrNull(tileEntity.getPlayerProfile().getProperties().get((Object)"textures"));
+        if (block instanceof BlockSkull && (tileEntity = (TileEntitySkull)Shady.mc.theWorld.getTileEntity(position)).getSkullType() == 3) {
+            Property property = (Property)ArrayUtils.firstOrNull(tileEntity.getPlayerProfile().getProperties().get((String) "textures"));
             return property != null && property.getValue().hashCode() == essenceSkinHash;
         }
         return false;

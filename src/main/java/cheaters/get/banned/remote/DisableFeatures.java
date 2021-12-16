@@ -23,7 +23,7 @@ public class DisableFeatures {
             // empty catch block
         }
         if (response != null) {
-            return Arrays.asList((Object[])new Gson().fromJson(response, String[].class));
+      //      return Arrays.asList((Object[])new Gson().fromJson(response, String[].class));
         }
         return Collections.emptyList();
     }

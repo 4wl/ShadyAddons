@@ -102,7 +102,7 @@ public class AutoTerminals {
         if (!Config.autoTerminals || !Utils.inDungeon) {
             return;
         }
-        if (Shady.mc.player == null || Shady.mc.world == null) {
+        if (Shady.mc.thePlayer == null || Shady.mc.theWorld == null) {
             return;
         }
         if (!(Shady.mc.currentScreen instanceof GuiChest)) {
@@ -121,16 +121,16 @@ public class AutoTerminals {
                 int[] mazeDirection = new int[]{-9, -1, 1, 9};
                 boolean[] isStartSlot = new boolean[54];
                 int endSlot = -1;
-                for (Slot slot : invSlots) {
+                /*for (Slot slot : invSlots) {
                     ItemStack itemStack;
-                    if (slot.inventory == Shady.mc.player.inventory || (itemStack = slot.getStack()) == null || itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.STAINED_GLASS_PANE)) continue;
+                    if (slot.inventory == Shady.mc.thePlayer.inventory || (itemStack = slot.getStack()) == null || itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.stained_glass_pane)) continue;
                     if (itemStack.getItemDamage() == 5) {
                         isStartSlot[slot.slotNumber] = true;
                         continue;
                     }
                     if (itemStack.getItemDamage() != 14) continue;
                     endSlot = slot.slotNumber;
-                }
+                }*/
                 for (int slot = 0; slot < 54; ++slot) {
                     if (!isStartSlot[slot]) continue;
                     boolean[] mazeVisited = new boolean[54];
@@ -144,7 +144,7 @@ public class AutoTerminals {
                             if (nextSlot == endSlot) {
                                 return false;
                             }
-                            if (mazeVisited[nextSlot] || (itemStack = ((Slot)invSlots.get(nextSlot)).getStack()) == null || itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.STAINED_GLASS_PANE) || itemStack.getItemDamage() != 0) continue;
+                            if (mazeVisited[nextSlot] || (itemStack = ((Slot)invSlots.get(nextSlot)).getStack()) == null || itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.stained_glass_pane) || itemStack.getItemDamage() != 0) continue;
                             clickQueue.add((Slot)invSlots.get(nextSlot));
                             startSlot = nextSlot;
                             mazeVisited[nextSlot] = true;
@@ -163,7 +163,7 @@ public class AutoTerminals {
                 Slot[] temp = new Slot[14];
                 for (int i = 10; i <= 25; ++i) {
                     ItemStack itemStack;
-                    if (i == 17 || i == 18 || (itemStack = ((Slot)invSlots.get(i)).getStack()) == null || itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.STAINED_GLASS_PANE) || itemStack.stackSize >= 15) continue;
+                    if (i == 17 || i == 18 || (itemStack = ((Slot)invSlots.get(i)).getStack()) == null || itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.stained_glass_pane) || itemStack.stackSize >= 15) continue;
                     if (itemStack.getItemDamage() == 14) {
                         temp[itemStack.stackSize - 1] = (Slot)invSlots.get(i);
                         continue;
@@ -176,29 +176,29 @@ public class AutoTerminals {
                 return true;
             }
             case CORRECT_ALL: {
-                for (Slot slot : invSlots) {
-                    if (slot.inventory == Shady.mc.player.inventory || slot.slotNumber < 9 || slot.slotNumber > 35 || slot.slotNumber % 9 <= 1 || slot.slotNumber % 9 >= 7) continue;
+                /*for (Slot slot : invSlots) {
+                    if (slot.inventory == Shady.mc.thePlayer.inventory || slot.slotNumber < 9 || slot.slotNumber > 35 || slot.slotNumber % 9 <= 1 || slot.slotNumber % 9 >= 7) continue;
                     ItemStack itemStack = slot.getStack();
                     if (itemStack == null) {
                         return true;
                     }
-                    if (itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.STAINED_GLASS_PANE) || itemStack.getItemDamage() != 14) continue;
+                    if (itemStack.getItem() != Item.getItemFromBlock((Block)Blocks.stained_glass_pane) || itemStack.getItemDamage() != 14) continue;
                     clickQueue.add(slot);
-                }
+                }*/
                 break;
             }
             case LETTER: {
                 if (chestName.length() <= chestName.indexOf("'") + 1) break;
                 char letterNeeded = chestName.charAt(chestName.indexOf("'") + 1);
-                for (Slot slot : invSlots) {
-                    if (slot.inventory == Shady.mc.player.inventory || slot.slotNumber < 9 || slot.slotNumber > 44 || slot.slotNumber % 9 == 0 || slot.slotNumber % 9 == 8) continue;
+                /*for (Slot slot : invSlots) {
+                    if (slot.inventory == Shady.mc.thePlayer.inventory || slot.slotNumber < 9 || slot.slotNumber > 44 || slot.slotNumber % 9 == 0 || slot.slotNumber % 9 == 8) continue;
                     ItemStack itemStack = slot.getStack();
                     if (itemStack == null) {
                         return true;
                     }
                     if (itemStack.isItemEnchanted() || StringUtils.stripControlCodes((String)itemStack.getDisplayName()).charAt(0) != letterNeeded) continue;
                     clickQueue.add(slot);
-                }
+                }*/
                 break;
             }
             case COLOR: {
@@ -206,19 +206,19 @@ public class AutoTerminals {
                 for (EnumDyeColor color : EnumDyeColor.values()) {
                     String colorName = color.getName().replaceAll("_", " ").toUpperCase();
                     if (!chestName.contains(colorName)) continue;
-                    colorNeeded = color.getTranslationKey();
+                    colorNeeded = color.getUnlocalizedName();
                     break;
                 }
                 if (colorNeeded == null) break;
-                for (Slot slot : invSlots) {
-                    if (slot.inventory == Shady.mc.player.inventory || slot.slotNumber < 9 || slot.slotNumber > 44 || slot.slotNumber % 9 == 0 || slot.slotNumber % 9 == 8) continue;
+               /* for (Slot slot : invSlots) {
+                    if (slot.inventory == Shady.mc.thePlayer.inventory || slot.slotNumber < 9 || slot.slotNumber > 44 || slot.slotNumber % 9 == 0 || slot.slotNumber % 9 == 8) continue;
                     ItemStack itemStack = slot.getStack();
                     if (itemStack == null) {
                         return true;
                     }
-                    if (itemStack.isItemEnchanted() || !itemStack.getTranslationKey().contains(colorNeeded)) continue;
+                    if (itemStack.isItemEnchanted() || !itemStack.getUnlocalizedName().contains(colorNeeded)) continue;
                     clickQueue.add(slot);
-                }
+                }*/
                 break;
             }
         }
@@ -227,12 +227,12 @@ public class AutoTerminals {
 
     private void clickSlot(Slot slot) {
         if (windowClicks == 0) {
-            windowId = Shady.mc.player.openContainer.windowId;
+            windowId = Shady.mc.thePlayer.openContainer.windowId;
         }
         if (testing) {
-            Shady.mc.playerController.func_78753_a(windowId + windowClicks, slot.slotNumber, 0, 1, (EntityPlayer)Shady.mc.player);
+            Shady.mc.playerController.windowClick(windowId + windowClicks, slot.slotNumber, 0, 1, (EntityPlayer)Shady.mc.thePlayer);
         } else {
-            Shady.mc.playerController.func_78753_a(windowId + windowClicks, slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.player);
+            Shady.mc.playerController.windowClick(windowId + windowClicks, slot.slotNumber, 2, 0, (EntityPlayer)Shady.mc.thePlayer);
         }
         lastClickTime = System.currentTimeMillis();
         if (Config.terminalPingless) {

@@ -85,7 +85,7 @@ public class MobESP {
     @SubscribeEvent
     public void onRenderEntityModel(RenderEntityModelEvent event) {
         if (Utils.inDungeon && !checkedStarNameTags.contains((Object)event.entity) && Config.starredMobEsp && event.entity instanceof EntityArmorStand && event.entity.hasCustomName() && event.entity.getCustomNameTag().contains("\u272f")) {
-            List possibleEntities = event.entity.getEntityWorld().getEntitiesInAABBexcluding((Entity)event.entity, event.entity.getEntityBoundingBox().grow(0.0, 3.0, 0.0), entity -> !(entity instanceof EntityArmorStand));
+            List possibleEntities = event.entity.getEntityWorld().getEntitiesInAABBexcluding((Entity)event.entity, event.entity.getEntityBoundingBox().expand(0.0, 3.0, 0.0), entity -> !(entity instanceof EntityArmorStand));
             if (!possibleEntities.isEmpty()) {
                 MobESP.highlightEntity((Entity)possibleEntities.get(0), Color.ORANGE);
             }

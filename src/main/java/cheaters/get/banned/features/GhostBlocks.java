@@ -30,16 +30,16 @@ public class GhostBlocks {
     public void onRenderWorld(RenderWorldLastEvent event) {
         Block lookingAtblock;
         BlockPos lookingAtPos;
-        if (Config.ghostBlockKeybind && KeybindUtils.get("Create Ghost Block").isKeyDown() && (lookingAtPos = Shady.mc.player.rayTrace((double)Shady.mc.playerController.getBlockReachDistance(), 1.0f).getBlockPos()) != null && !Utils.isInteractable(lookingAtblock = Shady.mc.world.getBlockState(lookingAtPos).getBlock())) {
-            Shady.mc.world.setBlockToAir(lookingAtPos);
+        if (Config.ghostBlockKeybind && KeybindUtils.get("Create Ghost Block").isKeyDown() && (lookingAtPos = Shady.mc.thePlayer.rayTrace((double)Shady.mc.playerController.getBlockReachDistance(), 1.0f).getBlockPos()) != null && !Utils.isInteractable(lookingAtblock = Shady.mc.theWorld.getBlockState(lookingAtPos).getBlock())) {
+            Shady.mc.theWorld.setBlockToAir(lookingAtPos);
         }
     }
 
     @SubscribeEvent
     public void onRightClick(ClickEvent.Right event) {
         String itemId;
-        if (Utils.inSkyBlock && Config.stonkGhostBlock && Shady.mc.objectMouseOver != null && Shady.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && !Utils.isInteractable(Shady.mc.world.getBlockState(Shady.mc.objectMouseOver.getBlockPos()).getBlock()) && ((itemId = Utils.getSkyBlockID(Shady.mc.player.func_70694_bm())).equals("STONK_PICKAXE") || itemId.equals("GOLD_PICKAXE"))) {
-            Shady.mc.world.setBlockToAir(Shady.mc.objectMouseOver.getBlockPos());
+        if (Utils.inSkyBlock && Config.stonkGhostBlock && Shady.mc.objectMouseOver != null && Shady.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && !Utils.isInteractable(Shady.mc.theWorld.getBlockState(Shady.mc.objectMouseOver.getBlockPos()).getBlock()) && ((itemId = Utils.getSkyBlockID(Shady.mc.thePlayer.getHeldItem())).equals("STONK_PICKAXE") || itemId.equals("GOLD_PICKAXE"))) {
+            Shady.mc.theWorld.setBlockToAir(Shady.mc.objectMouseOver.getBlockPos());
             event.setCanceled(true);
         }
     }
