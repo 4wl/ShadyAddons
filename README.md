@@ -4,7 +4,7 @@ It's a cheat for Hypixel skyblock
 
 ----------------------------------------------
 
-Done :>
+Just fix bugs, still can't run.
 
 ----------------------------------------------
 
